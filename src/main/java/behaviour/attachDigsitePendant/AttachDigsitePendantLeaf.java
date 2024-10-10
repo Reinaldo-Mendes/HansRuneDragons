@@ -14,8 +14,6 @@ import utilities.Areas;
 import utilities.Timing;
 import utilities.handlers.BankHandler;
 
-import static org.dreambot.api.utilities.Logger.log;
-
 public class AttachDigsitePendantLeaf extends Leaf {
     @Override
     public boolean isValid() {
@@ -24,6 +22,9 @@ public class AttachDigsitePendantLeaf extends Leaf {
 
     @Override
     public int onLoop() {
+        if(!Inventory.contains(i -> i.getName().contains("Ring of dueling"))){
+            BankHandler.withdrawItem("Ring of dueling", BankMode.ITEM);
+        }
             Item pendant = Inventory.get(i -> i.getName().contains("Digsite pendant"));
             if(pendant == null){
                 BankHandler.withdrawItem("Digsite pendant", BankMode.ITEM);

@@ -2,7 +2,9 @@ package utilities.handlers;
 
 import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.container.impl.bank.Bank;
+import org.dreambot.api.methods.container.impl.bank.BankLocation;
 import org.dreambot.api.methods.container.impl.bank.BankMode;
+import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BankHandler {
-
+static int openBankFailCounter;
     public static boolean withdrawItem(String itemName, BankMode bankMode){
         if(!Bank.isOpen()){
             if(Bank.open()){
@@ -28,6 +30,11 @@ public class BankHandler {
                     withdrawItem(itemName,bankMode);
                 }
             }
+            if(Inventory.getEmptySlots() < 1){
+                Bank.depositAllItems();
+                Logger.log("[BANK HANDLER] Deposited all items to make room for "+itemName);
+            }
+
             if(Bank.contains(i -> i.getName().contains(itemName))){
                 if(Bank.withdraw(i -> i.getName().contains(itemName))){
                     Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains(itemName)), 1000, 300);
@@ -132,9 +139,18 @@ public class BankHandler {
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawItemList(itemList, bankMode);
+            } else{
+                Logger.log("[BANK HANDLER] Failed to open bank.");
+                openBankFailCounter++;
+                Logger.log("Fail counter: "+openBankFailCounter);
+                if(openBankFailCounter >= 10){
+                    Logger.log("Unable to bank from here. Walking to default bank location...");
+                    Walking.walk(BankLocation.GRAND_EXCHANGE);
+                }
             }
         }
         if(Bank.isOpen()){
+            openBankFailCounter = 0;
             if(!bankMode.equals(Bank.getWithdrawMode())){
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
