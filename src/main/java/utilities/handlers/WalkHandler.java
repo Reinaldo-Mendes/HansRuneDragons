@@ -99,6 +99,15 @@ public class WalkHandler {
         webNode8.addDualConnections(webNode7);
         WebFinder.getWebFinder().addWebNode(webNode8);
 
+        EntranceWebNode runeDragonsBarrier = new EntranceWebNode(1574,5074);
+        runeDragonsBarrier.setEntityName("Barrier");
+        runeDragonsBarrier.setAction("Pass");
+        runeDragonsBarrier.addDualConnections(webNode8);
+
+        AbstractWebNode webNode9 = new BasicWebNode(1580,5074);
+        webNode9.addDualConnections(runeDragonsBarrier);
+        WebFinder.getWebFinder().addWebNode(webNode9);
+
 
     }
 }

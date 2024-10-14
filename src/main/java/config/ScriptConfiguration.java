@@ -29,8 +29,9 @@ public class ScriptConfiguration {
     private int maxRestockNumber;
     private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Osmumten's fang", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring",
             "Avernic defender", "Insulated boots", "Hitpoints cape(t)", "Peaceful blessing", "Barrows gloves"));
-
     private HashMap<String, Integer> inventoryLoadout = new HashMap<>();
+    private PrayerSettings prayerSettings;
+    private CombatSettings combatSettings;
     public int getLoopTime() {
         return loopTime;
     }
@@ -95,6 +96,22 @@ public class ScriptConfiguration {
         this.inventoryLoadout = inventoryLoadout;
     }
 
+    public PrayerSettings getPrayerSettings() {
+        return prayerSettings;
+    }
+
+    public void setPrayerSettings(PrayerSettings prayerSettings) {
+        this.prayerSettings = prayerSettings;
+    }
+
+    public CombatSettings getCombatSettings() {
+        return combatSettings;
+    }
+
+    public void setCombatSettings(CombatSettings combatSettings) {
+        this.combatSettings = combatSettings;
+    }
+
     public void initInventoryLoadout(){
         inventoryLoadout.put("Divine super combat potion(1)", 1);
         inventoryLoadout.put("Extended super antifire(2)", 1);
@@ -103,4 +120,5 @@ public class ScriptConfiguration {
         inventoryLoadout.put("Digsite pendant ", 1);
         inventoryLoadout.put("Monkfish",21);
     }
+
 }

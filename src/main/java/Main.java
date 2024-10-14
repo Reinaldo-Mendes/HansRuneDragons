@@ -1,5 +1,8 @@
 import behaviour.attachDigsitePendant.AttachDigsitePendantBranch;
 import behaviour.attachDigsitePendant.AttachDigsitePendantLeaf;
+import behaviour.killDragon.DrinkAntifireLeaf;
+import behaviour.killDragon.KillDragonBranch;
+import behaviour.killDragon.TeleportOutLeaf;
 import behaviour.loadInventory.LoadInventoryBranch;
 import behaviour.loadInventory.LoadInventoryLeaf;
 import behaviour.walkToDragons.WalkToDragonsBranch;
@@ -44,10 +47,11 @@ public class Main extends AbstractScript implements PaintInfo {
     private final Tree<Main> tree = new Tree<>();
     private void instantiateTree() {
         tree.addBranches(
-                new AttachDigsitePendantBranch().addLeafs(new AttachDigsitePendantLeaf()),
-                new WearEquipmentBranch().addLeafs(new WearEquipmentLeaf()),
-                new LoadInventoryBranch().addLeafs(new LoadInventoryLeaf()),
-                new WalkToDragonsBranch().addLeafs(new WalkToDragonsLeaf())
+                //new AttachDigsitePendantBranch().addLeafs(new AttachDigsitePendantLeaf()),
+                //new WearEquipmentBranch().addLeafs(new WearEquipmentLeaf()),
+                //new LoadInventoryBranch().addLeafs(new LoadInventoryLeaf()),
+                //new WalkToDragonsBranch().addLeafs(new WalkToDragonsLeaf()),
+                new KillDragonBranch().addLeafs(new TeleportOutLeaf(),new DrinkAntifireLeaf())
         );
     }
 
