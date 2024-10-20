@@ -23,9 +23,10 @@ import static org.dreambot.api.utilities.Logger.log;
 public class TeleportOutLeaf extends Leaf {
     @Override
     public boolean isValid() {
-        return isLowHpAndOutOfFood() ||
+        return (isLowHpAndOutOfFood() ||
                 isExtremelyLowHp() ||
-                isOutOfAntifireAndNoAntifireEffect();
+                isOutOfAntifireAndNoAntifireEffect() ||
+                isOutOfFoodAndInventoryIsFull()) && !Areas.FEROX_ENCLAVE.contains(Players.getLocal());
     }
 
     @Override
@@ -34,7 +35,8 @@ public class TeleportOutLeaf extends Leaf {
         if (ring != null && ring.getName().contains("Ring of dueling")) {
             if (ring.interact("Ferox Enclave")) {
                 Sleep.sleepUntil(() -> Areas.FEROX_ENCLAVE.contains(Players.getLocal()), 1000, 100);
-            } else {
+            }
+        }else {
                 log("We are not wearing dueling ring...");
                 Item inventoryRing = Inventory.get(i -> i.getName().contains("Ring of dueling"));
                 if (inventoryRing != null) {
@@ -49,8 +51,12 @@ public class TeleportOutLeaf extends Leaf {
                     }
                 }
             }
-        }
+
         return Timing.loopReturn();
+    }
+
+    private boolean isOutOfFoodAndInventoryIsFull(){
+        return !Inventory.contains(i -> i.hasAction("Eat")) && Inventory.isFull();
     }
 
     private boolean isLowHpAndOutOfFood() {

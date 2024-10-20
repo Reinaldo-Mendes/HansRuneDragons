@@ -3,12 +3,26 @@ package config;
 import org.dreambot.api.methods.combat.CombatStyle;
 
 public class CombatSettings {
+   private static CombatSettings combatSettings = new CombatSettings();
+
+   public static CombatSettings getCombatSettings(){
+      return combatSettings;
+   }
+   private static void setCombatSettings(CombatSettings combatSettings){
+      CombatSettings.combatSettings = combatSettings;
+   }
+
+   private CombatSettings(){
+
+   }
    private CombatStyle combatStyle;
-   private boolean enableAutoRetaliate;
-   private boolean alwaysUseSpecialWhenReady;
+   private boolean enableAutoRetaliate = true;
+   private boolean useSpecialAttack;
+   private int minPercentageToSpecialAttack;
+   private int maxPercentageToSpecialAttack;
    private int minHpToEAt = 55;
    private int maxHpToEat = 83;
-   private int emergencyTeleportHp = 20;
+   private int emergencyTeleportHp = 25;
 
    public CombatStyle getCombatStyle() {
       return combatStyle;
@@ -26,12 +40,28 @@ public class CombatSettings {
       this.enableAutoRetaliate = enableAutoRetaliate;
    }
 
-   public boolean isAlwaysUseSpecialWhenReady() {
-      return alwaysUseSpecialWhenReady;
+   public boolean isUseSpecialAttack() {
+      return useSpecialAttack;
    }
 
-   public void setAlwaysUseSpecialWhenReady(boolean alwaysUseSpecialWhenReady) {
-      this.alwaysUseSpecialWhenReady = alwaysUseSpecialWhenReady;
+   public void setUseSpecialAttack(boolean useSpecialAttack) {
+      this.useSpecialAttack = useSpecialAttack;
+   }
+
+   public int getMinPercentageToSpecialAttack() {
+      return minPercentageToSpecialAttack;
+   }
+
+   public void setMinPercentageToSpecialAttack(int minPercentageToSpecialAttack) {
+      this.minPercentageToSpecialAttack = minPercentageToSpecialAttack;
+   }
+
+   public int getMaxPercentageToSpecialAttack() {
+      return maxPercentageToSpecialAttack;
+   }
+
+   public void setMaxPercentageToSpecialAttack(int maxPercentageToSpecialAttack) {
+      this.maxPercentageToSpecialAttack = maxPercentageToSpecialAttack;
    }
 
    public int getMinHpToEAt() {

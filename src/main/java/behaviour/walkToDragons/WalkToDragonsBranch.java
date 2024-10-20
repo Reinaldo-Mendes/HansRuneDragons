@@ -10,8 +10,9 @@ import utilities.handlers.InventoryHandler;
 public class WalkToDragonsBranch extends Branch {
     @Override
     public boolean isValid() {
-        return InventoryHandler.containsHashMap(ScriptConfiguration.getScriptConfiguration().getInventoryLoadout()) &&
+        return (InventoryHandler.containsHashMap(ScriptConfiguration.getScriptConfiguration().getInventoryLoadout()) &&
         EquipmentHandler.isWearingItemList(ScriptConfiguration.getScriptConfiguration().getEquipmentToWear()) &&
-                !Areas.RUNE_DRAGONS.contains(Players.getLocal());
+                !Areas.RUNE_DRAGONS.contains(Players.getLocal())) ||
+                Areas.CHAMBER_BEFORE_RUNE_DRAGON.contains(Players.getLocal());
     }
 }

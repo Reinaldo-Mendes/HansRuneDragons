@@ -22,11 +22,13 @@ public class ScriptConfiguration {
     }
 
     private int loopTime;
-    private int minHpEat;
-    private int maxHpEat;
     private int playersToHop;
     private int minRestockNumber;
     private int maxRestockNumber;
+    private List<String> itemsToLoot = new ArrayList<>(Arrays.asList("Dragon bones","Runite bar", "Rune platebody","Rune longsword","Rune mace","Rune scimitar","Rune warhammer","Rune platelegs",
+            "Dragon platelegs","Dragon plateskirt","Dragon med helm","Wrath rune","Chaos rune","Death rune","Rune javelin heads","Runite bolts (unf)","Dragonstone","Runite ore",
+            "Dragon javelin heads","Dragon bolts (unf)","Loop half of key","Tooth half of key", "Rune 2h sword","Rune battleaxe","Rune sq shield","Law rune","Rune kiteshield","Rune spear",
+            "Shield left half","Dragon spear","Brimstone key","Dragon limbs","Dragon metal lump","Draconic visage"));
     private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Osmumten's fang", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring",
             "Avernic defender", "Insulated boots", "Hitpoints cape(t)", "Peaceful blessing", "Barrows gloves"));
     private HashMap<String, Integer> inventoryLoadout = new HashMap<>();
@@ -38,22 +40,6 @@ public class ScriptConfiguration {
 
     public void setLoopTime(int loopTime) {
         this.loopTime = loopTime;
-    }
-
-    public int getMinHpEat() {
-        return minHpEat;
-    }
-
-    public void setMinHpEat(int minHpEat) {
-        this.minHpEat = minHpEat;
-    }
-
-    public int getMaxHpEat() {
-        return maxHpEat;
-    }
-
-    public void setMaxHpEat(int maxHpEat) {
-        this.maxHpEat = maxHpEat;
     }
 
     public int getPlayersToHop() {
@@ -80,6 +66,14 @@ public class ScriptConfiguration {
         this.maxRestockNumber = maxRestockNumber;
     }
 
+    public List<String> getItemsToLoot() {
+        return itemsToLoot;
+    }
+
+    public void setItemsToLoot(List<String> itemsToLoot) {
+        this.itemsToLoot = itemsToLoot;
+    }
+
     public List<String> getEquipmentToWear() {
         return equipmentToWear;
     }
@@ -97,7 +91,7 @@ public class ScriptConfiguration {
     }
 
     public PrayerSettings getPrayerSettings() {
-        return prayerSettings;
+        return PrayerSettings.getPrayerSettings();
     }
 
     public void setPrayerSettings(PrayerSettings prayerSettings) {
@@ -105,20 +99,24 @@ public class ScriptConfiguration {
     }
 
     public CombatSettings getCombatSettings() {
-        return combatSettings;
+        return CombatSettings.getCombatSettings();
     }
 
     public void setCombatSettings(CombatSettings combatSettings) {
         this.combatSettings = combatSettings;
     }
 
+
+
     public void initInventoryLoadout(){
-        inventoryLoadout.put("Divine super combat potion(1)", 1);
+        inventoryLoadout.put("Divine super combat potion(2)", 1);
         inventoryLoadout.put("Extended super antifire(2)", 1);
         inventoryLoadout.put("Ring of dueling", 1);
         inventoryLoadout.put("Prayer potion(4)", 3);
         inventoryLoadout.put("Digsite pendant ", 1);
-        inventoryLoadout.put("Monkfish",21);
+        inventoryLoadout.put("Monkfish",18);
+        inventoryLoadout.put("Cooked karambwan",3);
     }
+
 
 }
