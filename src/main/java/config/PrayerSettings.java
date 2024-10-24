@@ -19,8 +19,8 @@ public class PrayerSettings {
     }
     private boolean flickPrayer = false;
     private boolean useQuickPrayer = true;
-    private int minPrayerToDrinkPotion = 20;
-    private int maxPrayerToDrinkPotion = 60;
+    private int minPrayerToDrinkPotion = 13;
+    private int maxPrayerToDrinkPotion = 45;
     private List<Prayer> selectedPrayers = new ArrayList<>(Arrays.asList(Prayer.PIETY, Prayer.PROTECT_FROM_MAGIC));
 
     public boolean isFlickPrayer() {

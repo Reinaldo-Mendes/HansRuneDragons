@@ -91,6 +91,14 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
         return this.tree.onLoop();
     }
 
+    @Override
+    public void onExit (){
+        log("Runtime: "+timer.elapsed());
+        log("Wealth generated: "+wealthTracker.getWealthGenerated()/1000+"k");
+        log("Wealth per hour: "+wealthTracker.getWealthGeneratedPerHour()/1000+"k");
+        log("Loot: "+GlobalVariables.lootedItems);
+
+    }
     /**
      * @return the information for the paint
      */

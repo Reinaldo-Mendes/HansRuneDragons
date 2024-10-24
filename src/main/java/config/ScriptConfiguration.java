@@ -29,8 +29,8 @@ public class ScriptConfiguration {
             "Dragon platelegs","Dragon plateskirt","Dragon med helm","Wrath rune","Chaos rune","Death rune","Rune javelin heads","Runite bolts (unf)","Dragonstone","Runite ore",
             "Dragon javelin heads","Dragon bolts (unf)","Loop half of key","Tooth half of key", "Rune 2h sword","Rune battleaxe","Rune sq shield","Law rune","Rune kiteshield","Rune spear",
             "Shield left half","Dragon spear","Brimstone key","Dragon limbs","Dragon metal lump","Draconic visage"));
-    private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Osmumten's fang", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring",
-            "Avernic defender", "Insulated boots", "Hitpoints cape(t)", "Peaceful blessing", "Barrows gloves"));
+    private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Dragon hunter lance", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring (i)",
+            "Dragonfire shield", "Insulated boots", "Obsidian cape", "Peaceful blessing", "Barrows gloves"));
     private HashMap<String, Integer> inventoryLoadout = new HashMap<>();
     private PrayerSettings prayerSettings;
     private CombatSettings combatSettings;
@@ -110,11 +110,11 @@ public class ScriptConfiguration {
 
     public void initInventoryLoadout(){
         inventoryLoadout.put("Divine super combat potion(2)", 1);
-        inventoryLoadout.put("Extended super antifire(2)", 1);
+        inventoryLoadout.put("Extended antifire(2)", 1);
         inventoryLoadout.put("Ring of dueling", 1);
-        inventoryLoadout.put("Prayer potion(4)", 3);
+        inventoryLoadout.put("Prayer potion(4)", 4);
         inventoryLoadout.put("Digsite pendant ", 1);
-        inventoryLoadout.put("Monkfish",18);
+        inventoryLoadout.put("Monkfish",17);
         inventoryLoadout.put("Cooked karambwan",3);
     }
 

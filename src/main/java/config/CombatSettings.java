@@ -20,8 +20,8 @@ public class CombatSettings {
    private boolean useSpecialAttack;
    private int minPercentageToSpecialAttack;
    private int maxPercentageToSpecialAttack;
-   private int minHpToEAt = 55;
-   private int maxHpToEat = 83;
+   private int minHpToEAt = 50;
+   private int maxHpToEat = 68;
    private int emergencyTeleportHp = 25;
 
    public CombatStyle getCombatStyle() {

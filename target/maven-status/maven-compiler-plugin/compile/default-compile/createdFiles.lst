@@ -1,4 +1,5 @@
 utilities\handlers\EquipmentHandler.class
+config\GEItem.class
 behaviour\disablePrayer\DisablePrayerLeaf.class
 utilities\handlers\InventoryHandler.class
 framework\Branch.class

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GlobalVariables {
     public static int nextPraySip = 30;
-    public static int nextFoodEat = 70;
+    public static int nextFoodEat = 68;
     public static List<LootItem> lootedItems;
     public static int killcount = 0;
     public static int currentDragonIndex;

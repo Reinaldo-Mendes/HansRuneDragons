@@ -30,14 +30,21 @@ public class AttackDragonLeaf extends Leaf {
             }
         }
         Sleep.sleepUntil(() -> Players.getLocal().isInCombat() &&
-                (Players.getLocal().getInteractingCharacter() != null && Players.getLocal().getInteractingCharacter().getName().equals("Rune dragon")), 7000, 100);
+                (Players.getLocal().getInteractingCharacter() != null && Players.getLocal().getInteractingCharacter().getName().equals("Rune dragon")), 3000, 100);
 
         if (Players.getLocal().isInCombat()) {
             Character currentDragon = Players.getLocal().getInteractingCharacter();
-            GlobalVariables.currentDragonIndex = currentDragon.getIndex();
             if (currentDragon != null) {
+                GlobalVariables.currentDragonIndex = currentDragon.getIndex();
                 if (currentDragon.getHealthPercent() <= 50) {
                     GlobalVariables.lastDragonIndex = currentDragon.getIndex();
+                }
+            } else{
+                Character dragon = Players.getLocal().getCharacterInteractingWithMe();
+                if(dragon != null){
+                    if(dragon.interact()){
+                        Sleep.sleepUntil(() -> Players.getLocal().getInteractingCharacter() != null, 2000, 100);
+                    }
                 }
             }
         } else {

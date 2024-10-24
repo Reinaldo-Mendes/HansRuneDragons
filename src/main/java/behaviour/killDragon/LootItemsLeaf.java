@@ -74,12 +74,16 @@ public class LootItemsLeaf extends Leaf {
                             return;
                         }
                     } else{
-                        log("Food to drop is null!");
-                        GroundItem loot = getLootOnGround();
-                        if (loot.interact("Take")) {
-                            Sleep.sleepUntil(() -> GlobalVariables.lootedItem, 1500, 100);
-                            GlobalVariables.lootedItem = false;
-                        }
+                        log("Food to drop is null! We are returning because we might need to teleport out.");
+                        return;
+                        /*GroundItem loot = getLootOnGround();
+                        if(loot != null){
+                            if (loot.interact("Take")) {
+                                Sleep.sleepUntil(() -> GlobalVariables.lootedItem, 1500, 100);
+                                GlobalVariables.lootedItem = false;
+                            }
+                        }*/
+
                     }
                 }
             }
@@ -89,7 +93,7 @@ public class LootItemsLeaf extends Leaf {
                 if (item != null) {
                     log("Current trying to take: "+item.getName());
                     if (item.interact("Take")) {
-                        Sleep.sleepUntil(() -> GlobalVariables.lootedItem, 1000, 100);
+                        Sleep.sleepUntil(() -> GlobalVariables.lootedItem, 1200, 100);
                         GlobalVariables.lootedItem = false;
                     }
                 } else {

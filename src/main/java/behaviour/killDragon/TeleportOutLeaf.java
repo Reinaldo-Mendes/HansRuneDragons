@@ -26,7 +26,9 @@ public class TeleportOutLeaf extends Leaf {
         return (isLowHpAndOutOfFood() ||
                 isExtremelyLowHp() ||
                 isOutOfAntifireAndNoAntifireEffect() ||
-                isOutOfFoodAndInventoryIsFull()) && !Areas.FEROX_ENCLAVE.contains(Players.getLocal());
+                isOutOfFoodAndInventoryIsFull() ||
+                isOutOfPrayerPotionAndLowPrayer()) && !Areas.FEROX_ENCLAVE.contains(Players.getLocal());
+
     }
 
     @Override
@@ -36,31 +38,31 @@ public class TeleportOutLeaf extends Leaf {
             if (ring.interact("Ferox Enclave")) {
                 Sleep.sleepUntil(() -> Areas.FEROX_ENCLAVE.contains(Players.getLocal()), 1000, 100);
             }
-        }else {
-                log("We are not wearing dueling ring...");
-                Item inventoryRing = Inventory.get(i -> i.getName().contains("Ring of dueling"));
-                if (inventoryRing != null) {
-                    EquipmentHandler.wearItem(inventoryRing.getName());
-                } else {
-                    log("We don't have dueling ring in inventory... Let's cross the barrier.");
-                    GameObject westBarrier = GameObjects.closest(g -> g.getName().equals("Barrier") && g.getX() == 1574);
-                    if(westBarrier != null && Players.getLocal().getX() >= 1575){
-                        if(westBarrier.interact("Pass")){
-                            Sleep.sleepUntil(() -> Players.getLocal().getX() <= 1573, 2000, 100);
-                        }
+        } else {
+            log("We are not wearing dueling ring...");
+            Item inventoryRing = Inventory.get(i -> i.getName().contains("Ring of dueling"));
+            if (inventoryRing != null) {
+                EquipmentHandler.wearItem(inventoryRing.getName());
+            } else {
+                log("We don't have dueling ring in inventory... Let's cross the barrier.");
+                GameObject westBarrier = GameObjects.closest(g -> g.getName().equals("Barrier") && g.getX() == 1574);
+                if (westBarrier != null && Players.getLocal().getX() >= 1575) {
+                    if (westBarrier.interact("Pass")) {
+                        Sleep.sleepUntil(() -> Players.getLocal().getX() <= 1573, 2000, 100);
                     }
                 }
             }
+        }
 
         return Timing.loopReturn();
     }
 
-    private boolean isOutOfFoodAndInventoryIsFull(){
+    private boolean isOutOfFoodAndInventoryIsFull() {
         return !Inventory.contains(i -> i.hasAction("Eat")) && Inventory.isFull();
     }
 
     private boolean isLowHpAndOutOfFood() {
-        return Skills.getBoostedLevel(Skill.HITPOINTS) <= 45 && !Inventory.contains(i -> i.hasAction("Eat"));
+        return Skills.getBoostedLevel(Skill.HITPOINTS) <= 55 && !Inventory.contains(i -> i.hasAction("Eat"));
     }
 
     private boolean isExtremelyLowHp() {
@@ -70,5 +72,9 @@ public class TeleportOutLeaf extends Leaf {
     private boolean isOutOfAntifireAndNoAntifireEffect() {
         return !Inventory.contains(i -> i.getName().contains("antifire")) && !Combat.isAntiFireEnabled() &&
                 !Combat.isSuperAntiFireEnabled();
+    }
+
+    private boolean isOutOfPrayerPotionAndLowPrayer() {
+        return !Inventory.contains(i -> i.getName().contains("Prayer")) && Skills.getBoostedLevel(Skill.PRAYER) <= 30;
     }
 }
