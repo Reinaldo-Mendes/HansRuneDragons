@@ -23,8 +23,8 @@ public class ScriptConfiguration {
 
     private int loopTime;
     private int playersToHop;
-    private int minRestockNumber;
-    private int maxRestockNumber;
+    private int minRestockNumber = 100;
+    private int maxRestockNumber = 150;
     private List<String> itemsToLoot = new ArrayList<>(Arrays.asList("Dragon bones","Runite bar", "Rune platebody","Rune longsword","Rune mace","Rune scimitar","Rune warhammer","Rune platelegs",
             "Dragon platelegs","Dragon plateskirt","Dragon med helm","Wrath rune","Chaos rune","Death rune","Rune javelin heads","Runite bolts (unf)","Dragonstone","Runite ore",
             "Dragon javelin heads","Dragon bolts (unf)","Loop half of key","Tooth half of key", "Rune 2h sword","Rune battleaxe","Rune sq shield","Law rune","Rune kiteshield","Rune spear",
@@ -34,6 +34,7 @@ public class ScriptConfiguration {
     private HashMap<String, Integer> inventoryLoadout = new HashMap<>();
     private PrayerSettings prayerSettings;
     private CombatSettings combatSettings;
+    private MuleSettings muleSettings;
     public int getLoopTime() {
         return loopTime;
     }
@@ -106,6 +107,14 @@ public class ScriptConfiguration {
         this.combatSettings = combatSettings;
     }
 
+    public MuleSettings getMuleSettings (){
+        return MuleSettings.getMuleSettings();
+    }
+
+    public void setMuleSettings(MuleSettings muleSettings){
+        this.muleSettings = muleSettings;
+    }
+
 
 
     public void initInventoryLoadout(){
@@ -117,6 +126,7 @@ public class ScriptConfiguration {
         inventoryLoadout.put("Monkfish",17);
         inventoryLoadout.put("Cooked karambwan",3);
     }
+
 
 
 }

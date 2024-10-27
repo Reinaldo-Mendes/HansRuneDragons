@@ -37,12 +37,10 @@ static int openBankFailCounter;
 
             if(Bank.contains(i -> i.getName().contains(itemName))){
                 if(Bank.withdraw(i -> i.getName().contains(itemName))){
-                    Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains(itemName)), 1000, 300);
+                    Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains(itemName)), 2000, 100);
                     Logger.log("[BANK HANDLER] Withdrew "+itemName+" successfully.");
                     return true;
                 }
-            } else{
-                //Logger.log("[BANK HANDLER] Adding "+itemName+" to buy list.");
             }
         }
         return false;
@@ -203,6 +201,22 @@ static int openBankFailCounter;
                 } else{
                     //Logger.log("[BANK HANDLER] Adding "+itemInList+" to buy list.");
                 }
+            }
+        }
+        return value;
+    }
+
+    public static boolean containsHashMap(HashMap<String, Integer> items){
+        boolean value = true;
+        for (Map.Entry<String, Integer> entry: items.entrySet()){
+            String name = entry.getKey();
+            int amount = entry.getValue() ;
+            if(Bank.contains(i -> i.getName().contains(name))){
+                if(Bank.count(i -> i.getName().contains(name)) != amount){
+                    value = false;
+                }
+            } else{
+                value = false;
             }
         }
         return value;

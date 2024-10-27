@@ -4,15 +4,22 @@ import behaviour.attachDigsitePendant.AttachDigsitePendantBranch;
 import behaviour.attachDigsitePendant.AttachDigsitePendantLeaf;
 import behaviour.disablePrayer.DisablePrayerBranch;
 import behaviour.disablePrayer.DisablePrayerLeaf;
+import behaviour.initScript.InitScriptBranch;
+import behaviour.initScript.InitScriptLeaf;
 import behaviour.killDragon.*;
 import behaviour.loadInventory.LoadInventoryBranch;
 import behaviour.loadInventory.LoadInventoryLeaf;
 import behaviour.refreshStats.RefreshStatsBranch;
 import behaviour.refreshStats.RefreshStatsLeaf;
+import behaviour.sellItems.SellItemsBranch;
+import behaviour.sellItems.SellLootLeaf;
+import behaviour.sellItems.WalkToGeLeaf;
 import behaviour.walkToDragons.WalkToDragonsBranch;
 import behaviour.walkToDragons.WalkToDragonsLeaf;
 import behaviour.wearEquipment.WearEquipmentBranch;
 import behaviour.wearEquipment.WearEquipmentLeaf;
+import buyItems.BuyItemsBranch;
+import buyItems.BuyItemsLeaf;
 import config.GlobalVariables;
 import config.LootItem;
 import config.ScriptConfiguration;
@@ -67,14 +74,17 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
 
     private void instantiateTree() {
         tree.addBranches(
+                //new InitScriptBranch().addLeafs(new InitScriptLeaf()),
                 new DisablePrayerBranch().addLeafs(new DisablePrayerLeaf()),
                 new AttachDigsitePendantBranch().addLeafs(new AttachDigsitePendantLeaf()),
+                new SellItemsBranch().addLeafs(new WalkToGeLeaf(), new SellLootLeaf()),
                 new KillDragonBranch().addLeafs(new TeleportOutLeaf(), new DrinkPrayerPotLeaf(), new ActivatePrayerLeaf(), new DrinkAntifireLeaf(), new EatFoodLeaf(), new DrinkCombatPotionLeaf(),
                         new ToggleAutoRetaliateLeaf(), new LootItemsLeaf(), new LootFoodLeaf(), new AttackDragonLeaf()),
                 new RefreshStatsBranch().addLeafs(new RefreshStatsLeaf()),
                 new WearEquipmentBranch().addLeafs(new WearEquipmentLeaf()),
                 new WalkToDragonsBranch().addLeafs(new WalkToDragonsLeaf()),
                 new LoadInventoryBranch().addLeafs(new LoadInventoryLeaf())
+                //new BuyItemsBranch().addLeafs(new WalkToGeLeaf(), new BuyItemsLeaf())
         );
     }
 
@@ -92,13 +102,14 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
     }
 
     @Override
-    public void onExit (){
-        log("Runtime: "+timer.elapsed());
-        log("Wealth generated: "+wealthTracker.getWealthGenerated()/1000+"k");
-        log("Wealth per hour: "+wealthTracker.getWealthGeneratedPerHour()/1000+"k");
-        log("Loot: "+GlobalVariables.lootedItems);
+    public void onExit() {
+        log("Runtime: " + timer.elapsed());
+        log("Wealth generated: " + wealthTracker.getWealthGenerated() / 1000 + "k");
+        log("Wealth per hour: " + wealthTracker.getWealthGeneratedPerHour() / 1000 + "k");
+        log("Loot: " + GlobalVariables.lootedItems);
 
     }
+
     /**
      * @return the information for the paint
      */
@@ -112,6 +123,7 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
                 "Next eat: " + GlobalVariables.nextFoodEat,
                 "Next pray sip: " + GlobalVariables.nextPraySip,
                 "Killcount: " + GlobalVariables.killcount,
+                "Trips to restock: "+GlobalVariables.tripsToRestock,
                 "Wealth generated: " + df.format(wealthTracker.getWealthGenerated() / 1000) + "k (" + df.format(wealthTracker.getWealthGeneratedPerHour() / 1000) + "k per hour)"
         };
     }
