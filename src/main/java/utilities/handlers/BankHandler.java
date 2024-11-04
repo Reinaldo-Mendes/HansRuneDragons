@@ -100,6 +100,41 @@ static int openBankFailCounter;
         return false;
     }
 
+    public static boolean depositAllItems(){
+        if(!Bank.isOpen()){
+            if(Bank.open()){
+                Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
+                depositAllItems();
+            }
+        }
+        if(Bank.isOpen()){
+                if(Bank.depositAllItems()){
+                    Sleep.sleepUntil(() -> Inventory.isEmpty(), 2000, 300);
+                    Logger.log("[BANK HANDLER] Deposited all items successfully.");
+                    return true;
+                }
+        }
+        return false;
+    }
+
+    public static boolean depositAllBut(List<String> itemList){
+            if(!Bank.isOpen()){
+                if(Bank.open()){
+                    Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
+                    depositAllItems();
+                }
+            }
+            if(Bank.isOpen()){
+                if(Bank.depositAll(i -> i != null && !itemList.contains(i.getName()))){
+                    Sleep.sleepUntil(() -> Inventory.isEmpty(), 2000, 300);
+                    Logger.log("[BANK HANDLER] Deposited all items successfully.");
+                    return true;
+                }
+            }
+            return false;
+
+    }
+
     public static boolean withdrawItem(String itemName, BankMode bankMode, int amount){
         if(!Bank.isOpen()){
             if(Bank.open()){
@@ -234,7 +269,7 @@ static int openBankFailCounter;
                 String itemName = i.getName();
                 if(i.getName().contains("(") && !i.hasAction("Drink")){
                     itemName = i.getName().substring(0,i.getName().indexOf("(")); // Getting the item name without ( for items like dueling ring and digsite pendant.
-                    Logger.log("Item name: "+itemName);
+                   // Logger.log("Item name: "+itemName);
                 }
                 if (!loadout.containsKey(itemName)) {
                     if (Bank.depositAll(i)) {
@@ -277,19 +312,19 @@ static int openBankFailCounter;
                 String name = entry.getKey();
                 Integer amount = entry.getValue();
                 if(!Inventory.contains(i -> i.getName().contains(name))){
-                    Logger.log("We need to withdraw "+name);
+                    //Logger.log("We need to withdraw "+name);
                     if(amount == -1){
                         if(Bank.withdrawAll(i -> i.getName().contains(name))){
-                            Logger.log("[BANK HANDLER] Withdrew all "+name);
+                            //Logger.log("[BANK HANDLER] Withdrew all "+name);
                             Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains(name)), 1000, 100);
                         }
                     } else{
                         if(Bank.withdraw(i -> i.getName().contains(name),amount)){
-                            Logger.log("[BANK HANDLER] Withdrew "+amount+ " "+name);
+                            //Logger.log("[BANK HANDLER] Withdrew "+amount+ " "+name);
                         }
                     }
                 } else{
-                    Logger.log("Inventory already contains "+name);
+                    //Logger.log("Inventory already contains "+name);
                     if(amount != -1){
                         if (Inventory.count(i -> i.getName().contains(name)) != amount){
                             int difference = amount - Inventory.count(i -> i.getName().contains(name));
@@ -297,10 +332,10 @@ static int openBankFailCounter;
                                 Sleep.sleep(1000,2000);
                             }
                         } else{
-                            Logger.log("We don't have to withdraw "+name);
+                            //Logger.log("We don't have to withdraw "+name);
                         }
                     } else{
-                        Logger.log("For the item "+name+" we must withdraw all!");
+                        //Logger.log("For the item "+name+" we must withdraw all!");
                         if(Bank.contains(i -> i.getName().contains(name))){
                             if(Bank.withdrawAll(i -> i.getName().contains(name))){
                                 Sleep.sleep(1000, 2000);
@@ -310,7 +345,7 @@ static int openBankFailCounter;
                 }
             }
         }
-        Logger.log("Return value: "+value);
+        //Logger.log("Return value: "+value);
         return value;
     }
 }

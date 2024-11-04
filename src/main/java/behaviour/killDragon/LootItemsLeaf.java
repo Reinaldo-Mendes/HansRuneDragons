@@ -93,7 +93,8 @@ public class LootItemsLeaf extends Leaf {
                 if (item != null) {
                     log("Current trying to take: "+item.getName());
                     if (item.interact("Take")) {
-                        Sleep.sleepUntil(() -> GlobalVariables.lootedItem, 1200, 100);
+                        Sleep.sleepUntil(() -> GlobalVariables.lootedItem || Skills.getBoostedLevel(Skill.HITPOINTS) >
+                                ScriptConfiguration.getScriptConfiguration().getCombatSettings().getEmergencyTeleportHp(), 5000, 100);
                         GlobalVariables.lootedItem = false;
                     }
                 } else {

@@ -1,4 +1,4 @@
-package buyItems;
+package behaviour.buyItems;
 
 import config.GlobalVariables;
 import config.ScriptConfiguration;

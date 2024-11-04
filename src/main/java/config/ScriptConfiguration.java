@@ -29,9 +29,11 @@ public class ScriptConfiguration {
             "Dragon platelegs","Dragon plateskirt","Dragon med helm","Wrath rune","Chaos rune","Death rune","Rune javelin heads","Runite bolts (unf)","Dragonstone","Runite ore",
             "Dragon javelin heads","Dragon bolts (unf)","Loop half of key","Tooth half of key", "Rune 2h sword","Rune battleaxe","Rune sq shield","Law rune","Rune kiteshield","Rune spear",
             "Shield left half","Dragon spear","Brimstone key","Dragon limbs","Dragon metal lump","Draconic visage"));
-    private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Dragon hunter lance", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring (i)",
-            "Dragonfire shield", "Insulated boots", "Obsidian cape", "Peaceful blessing", "Barrows gloves"));
+    private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Osmumten's fang", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring (i)",
+            "Avernic defender", "Insulated boots", "Obsidian cape", "Peaceful blessing", "Barrows gloves"));
     private HashMap<String, Integer> inventoryLoadout = new HashMap<>();
+    private HashMap<String, Integer> inventoryLoadoutBuyList = new HashMap<>();
+    private HashMap<String, Integer> digsitePendantIngredients = new HashMap<>();
     private PrayerSettings prayerSettings;
     private CombatSettings combatSettings;
     private MuleSettings muleSettings;
@@ -91,6 +93,22 @@ public class ScriptConfiguration {
         this.inventoryLoadout = inventoryLoadout;
     }
 
+    public HashMap<String, Integer> getInventoryLoadoutBuyList() {
+        return inventoryLoadoutBuyList;
+    }
+
+    public void setInventoryLoadoutBuyList(HashMap<String, Integer> inventoryLoadoutBuyList) {
+        this.inventoryLoadoutBuyList = inventoryLoadoutBuyList;
+    }
+
+    public HashMap<String, Integer> getDigsitePendantIngredients() {
+        return digsitePendantIngredients;
+    }
+
+    public void setDigsitePendantIngredients(HashMap<String, Integer> digsitePendantIngredients) {
+        this.digsitePendantIngredients = digsitePendantIngredients;
+    }
+
     public PrayerSettings getPrayerSettings() {
         return PrayerSettings.getPrayerSettings();
     }
@@ -119,7 +137,7 @@ public class ScriptConfiguration {
 
     public void initInventoryLoadout(){
         inventoryLoadout.put("Divine super combat potion(2)", 1);
-        inventoryLoadout.put("Extended antifire(2)", 1);
+        inventoryLoadout.put("Extended super antifire(2)", 1);
         inventoryLoadout.put("Ring of dueling", 1);
         inventoryLoadout.put("Prayer potion(4)", 4);
         inventoryLoadout.put("Digsite pendant ", 1);
@@ -127,6 +145,19 @@ public class ScriptConfiguration {
         inventoryLoadout.put("Cooked karambwan",3);
     }
 
+    public void initInventoryLoadoutBuyList(){
+        inventoryLoadoutBuyList.put("Divine super combat potion(2)", 1);
+        inventoryLoadoutBuyList.put("Extended super antifire(2)", 1);
+        inventoryLoadoutBuyList.put("Ring of dueling(8)", 1);
+        inventoryLoadoutBuyList.put("Prayer potion(4)", 4);
+        inventoryLoadoutBuyList.put("Monkfish",17);
+        inventoryLoadoutBuyList.put("Cooked karambwan",3);
+    }
+
+    public void initDigsitePendantIngredientsMap(){
+        digsitePendantIngredients.put("Cosmic rune",1);
+        digsitePendantIngredients.put("Ruby necklace",1);
+    }
 
 
 }

@@ -1,12 +1,18 @@
 package utilities.handlers;
 
 import org.dreambot.api.methods.Calculations;
+import org.dreambot.api.methods.container.impl.Inventory;
+import org.dreambot.api.methods.container.impl.bank.BankLocation;
+import org.dreambot.api.methods.container.impl.bank.BankMode;
 import org.dreambot.api.methods.map.Tile;
 import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.methods.walking.pathfinding.impl.web.WebFinder;
 import org.dreambot.api.methods.walking.web.node.AbstractWebNode;
 import org.dreambot.api.methods.walking.web.node.impl.BasicWebNode;
 import org.dreambot.api.methods.walking.web.node.impl.EntranceWebNode;
+import org.dreambot.api.utilities.Sleep;
+
+import static org.dreambot.api.utilities.Logger.log;
 
 public class WalkHandler {
     public static boolean walkTo(int distance, Tile tile) {
@@ -19,6 +25,19 @@ public class WalkHandler {
             return Walking.walk(tile);
         }
         return false;
+    }
+
+    public static void walkToGe(){
+        if(!Inventory.contains(i -> i.getName().contains("Ring of wealth ("))){
+            log("Need to grab ring of wealth");
+            if(BankHandler.withdrawItem("Ring of wealth (", BankMode.ITEM)){
+                Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains("Ring of wealth (")),2000,100);
+            } else{
+                log("Failed to withdraw ring of wealth");
+            }
+        } else{
+            Walking.walk(BankLocation.GRAND_EXCHANGE.getArea(15).getRandomTile());
+        }
     }
 
 

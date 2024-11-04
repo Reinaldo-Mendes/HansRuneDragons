@@ -1,6 +1,7 @@
 package utilities.handlers;
 
 import org.dreambot.api.methods.container.impl.Inventory;
+import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.methods.container.impl.equipment.Equipment;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.utilities.Sleep;
@@ -9,6 +10,7 @@ import org.dreambot.api.wrappers.items.Item;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EquipmentHandler {
 
@@ -51,12 +53,12 @@ public class EquipmentHandler {
                     }
                 }
 
-                if(item.hasAction("Equip")){
-                    if(item.interact("Equip")){
+                if (item.hasAction("Equip")) {
+                    if (item.interact("Equip")) {
                         Sleep.sleepUntil(() -> Equipment.all().contains(itemInList), 400, 100);
-                    } else{
+                    } else {
                         value = false;
-                        Logger.log(Color.RED,"[EQUIPMENT HANDLER] Failed to equip "+item.getName());
+                        Logger.log(Color.RED, "[EQUIPMENT HANDLER] Failed to equip " + item.getName());
                     }
                 }
             } else {
@@ -103,5 +105,38 @@ public class EquipmentHandler {
         return missingItems;
     }
 
+    public static boolean containsAny(List<String> itemList) {
+        for (String item : itemList) {
+            Logger.log("Equipment: " + Equipment.all());
+            if (Equipment.contains(item)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public static List<String> getMissingEquipmentFromAllContainers(List<String> desiredItems) {
+        List<String> equipmentList = Equipment.all().stream()
+                .filter(item -> item != null && item.getName() != null)
+                .map(Item::getName)
+                .collect(Collectors.toList());
+
+        List<String> inventoryList = Inventory.all().stream()
+                .filter(item -> item != null && item.getName() != null)
+                .map(Item::getName)
+                .collect(Collectors.toList());
+
+        List<String> bankList = Bank.all().stream()
+                .filter(item -> item != null && item.getName() != null)
+                .map(Item::getName)
+                .collect(Collectors.toList());
+
+        List<String> allItems = equipmentList;
+        allItems.addAll(inventoryList);
+        allItems.addAll(bankList);
+
+        return desiredItems.stream()
+                .filter(requiredItem -> !allItems.contains(requiredItem))
+                .collect(Collectors.toList());
+    }
 }

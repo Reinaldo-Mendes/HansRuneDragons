@@ -1,4 +1,4 @@
-package buyItems;
+package behaviour.buyItems;
 
 import config.GlobalVariables;
 import config.ScriptConfiguration;
@@ -9,7 +9,6 @@ import utilities.Timing;
 import utilities.handlers.BankHandler;
 import utilities.handlers.GrandExchangeHandler;
 import utilities.handlers.InventoryHandler;
-
 import java.util.HashMap;
 import java.util.Map;
 

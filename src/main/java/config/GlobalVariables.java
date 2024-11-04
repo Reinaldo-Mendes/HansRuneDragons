@@ -18,6 +18,7 @@ public class GlobalVariables {
     public static boolean isSellingLootToMule = false;
     public static boolean isBuyingLoadoutItems = false;
     public static boolean hasInitiatedScript = false;
+    public static boolean needPendant = false;
 
 
     public static void cacheLootedItemsList(){

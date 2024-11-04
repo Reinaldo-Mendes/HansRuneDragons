@@ -1,10 +1,12 @@
 package utilities.handlers;
 
+import config.ScriptConfiguration;
 import org.dreambot.api.methods.container.impl.Inventory;
-import org.dreambot.api.utilities.Logger;
+import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.wrappers.items.Item;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +63,69 @@ public class InventoryHandler {
             log(Color.RED, "[INVENTORY HANDLER] Item " + itemName + " is null");
         }
         return false;
+    }
+
+    public static List<String> getMissingLoadoutItemsFromBankAndInventory(HashMap<String, Integer> loadout){
+        // Mapeia os itens no inventário e banco por nome base e quantidade
+        Map<String, Integer> availableItems = new HashMap<>();
+
+        // Adiciona itens do inventário
+        Inventory.all().stream()
+                .filter(item -> item != null && item.getName() != null)
+                .forEach(item -> addItemToMap(availableItems, item));
+
+        // Adiciona itens do banco
+        Bank.all().stream()
+                .filter(item -> item != null && item.getName() != null)
+                .forEach(item -> addItemToMap(availableItems, item));
+
+        // Lista de itens que faltam
+        List<String> missingItems = new ArrayList<>();
+
+        // Verifica cada item e quantidade do loadout necessário
+        ScriptConfiguration.getScriptConfiguration().getInventoryLoadout().forEach((baseName, requiredAmount) -> {
+            int availableAmount = getAvailableAmount(availableItems, baseName);
+            if (availableAmount < requiredAmount) {
+                missingItems.add(baseName + " (faltam: " + (requiredAmount - availableAmount) + ")");
+            }
+        });
+
+        return missingItems;
+    }
+
+    public static List<String> getMissingLoadoutItems(HashMap<String, Integer> loadout){
+        // Mapeia os itens no inventário e banco por nome base e quantidade
+        Map<String, Integer> availableItems = new HashMap<>();
+
+        // Adiciona itens do inventário
+        Inventory.all().stream()
+                .filter(item -> item != null && item.getName() != null)
+                .forEach(item -> addItemToMap(availableItems, item));
+
+        // Lista de itens que faltam
+        List<String> missingItems = new ArrayList<>();
+
+        // Verifica cada item e quantidade do loadout necessário
+        ScriptConfiguration.getScriptConfiguration().getInventoryLoadout().forEach((baseName, requiredAmount) -> {
+            int availableAmount = getAvailableAmount(availableItems, baseName);
+            if (availableAmount < requiredAmount) {
+                missingItems.add(baseName + " (faltam: " + (requiredAmount - availableAmount) + ")");
+            }
+        });
+
+        return missingItems;
+    }
+
+    private static void addItemToMap(Map<String, Integer> map, Item item) {
+        String baseName = item.getName().split(" \\(")[0].trim();
+        map.merge(baseName, item.getAmount(), Integer::sum);
+    }
+
+    private static int getAvailableAmount(Map<String, Integer> availableItems, String baseName) {
+        return availableItems.entrySet().stream()
+                .filter(entry -> entry.getKey().trim().startsWith(baseName.trim())) // Verifica se o nome base corresponde
+                .mapToInt(Map.Entry::getValue) // Soma as quantidades
+                .sum();
     }
 
 }
