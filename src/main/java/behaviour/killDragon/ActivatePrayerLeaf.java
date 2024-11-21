@@ -8,6 +8,7 @@ import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.utilities.Hash;
 import org.dreambot.api.utilities.Sleep;
+import utilities.API;
 import utilities.Timing;
 
 import java.util.Arrays;
@@ -31,6 +32,7 @@ public class ActivatePrayerLeaf extends Leaf {
                     Prayers.toggleQuickPrayer(false);
                     if(comparePrayerLists(Prayers.getQuickPrayers(),ScriptConfiguration.getScriptConfiguration().getPrayerSettings().getSelectedPrayers())){
                         if(!Prayers.isQuickPrayerActive()){
+                            API.status = "Toggling prayer";
                             if(Prayers.toggleQuickPrayer(true)){
                                 log("Activated quick prayers...");
                                 Sleep.sleepUntil(() -> Prayers.isQuickPrayerActive(), 1000, 100);

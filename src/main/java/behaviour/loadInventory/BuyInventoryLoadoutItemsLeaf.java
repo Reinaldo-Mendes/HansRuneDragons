@@ -5,6 +5,7 @@ import framework.Leaf;
 import org.dreambot.api.methods.container.impl.bank.BankLocation;
 import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.methods.walking.impl.Walking;
+import utilities.API;
 import utilities.Timing;
 import utilities.handlers.GrandExchangeHandler;
 import utilities.handlers.InventoryHandler;
@@ -21,6 +22,7 @@ public class BuyInventoryLoadoutItemsLeaf extends Leaf {
     @Override
     public int onLoop() {
         if(!BankLocation.GRAND_EXCHANGE.getArea(10).contains(Players.getLocal())){
+            API.status = "Walking to GE";
             WalkHandler.walkToGe();
         } else{
             log(GrandExchangeHandler.calculateItemsToBuy(ScriptConfiguration.getScriptConfiguration().getInventoryLoadoutBuyList()));

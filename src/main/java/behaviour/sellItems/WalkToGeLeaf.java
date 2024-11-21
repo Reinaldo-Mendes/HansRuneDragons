@@ -7,6 +7,7 @@ import org.dreambot.api.methods.container.impl.bank.BankMode;
 import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.utilities.Sleep;
+import utilities.API;
 import utilities.Timing;
 import utilities.handlers.BankHandler;
 
@@ -28,6 +29,7 @@ public class WalkToGeLeaf extends Leaf {
                 log("Failed to withdraw ring of wealth");
             }
         } else{
+            API.status = "Walking to GE";
             Walking.walk(BankLocation.GRAND_EXCHANGE.getArea(15).getRandomTile());
         }
         return Timing.loopReturn();

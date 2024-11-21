@@ -4,6 +4,7 @@ import framework.Leaf;
 import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.container.impl.bank.Bank;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 
 import static org.dreambot.api.utilities.Sleep.sleepUntil;
@@ -21,6 +22,7 @@ public class BankNotedItemsLeaf extends Leaf {
             sleepUntil(() -> Bank.isOpen(), 5000); // Aguarda até que o banco esteja aberto
         }
         if (Bank.isOpen()) {
+            API.status = "Banking noted item";
             Inventory.all().stream()
                     .filter(item -> item != null && item.isNoted())
                     .forEach(item -> Bank.depositAll(item.getName()));

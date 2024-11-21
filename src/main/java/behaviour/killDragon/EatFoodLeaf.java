@@ -9,6 +9,7 @@ import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 
 public class EatFoodLeaf extends Leaf
@@ -24,7 +25,8 @@ public class EatFoodLeaf extends Leaf
         if(isLowHp()){
             Item karambwan = Inventory.get(k -> k.getName().equals("Cooked karambwan"));
             if(primaryFood != null && karambwan != null){
-                primaryFood.interact("Eat");
+                API.status = "Combo eating";
+                        primaryFood.interact("Eat");
                 karambwan.interact("Eat");
                 GlobalVariables.nextFoodEat = Calculations.random(ScriptConfiguration.getScriptConfiguration().getCombatSettings().getMinHpToEAt(),
                         ScriptConfiguration.getScriptConfiguration().getCombatSettings().getMaxHpToEat());
@@ -32,7 +34,8 @@ public class EatFoodLeaf extends Leaf
             }
         }
         if(primaryFood != null){
-            primaryFood.interact("Eat");
+            API.status = "Eating "+primaryFood.getName();
+                    primaryFood.interact("Eat");
             Sleep.sleepUntil(() -> Skills.getBoostedLevel(Skill.HITPOINTS) < ScriptConfiguration.getScriptConfiguration().getCombatSettings().getMinHpToEAt(),
                     500,100); // We sleep for 0.5 seconds or until hp changes if it's still lower than min hp to eat
             GlobalVariables.nextFoodEat = Calculations.random(ScriptConfiguration.getScriptConfiguration().getCombatSettings().getMinHpToEAt(),

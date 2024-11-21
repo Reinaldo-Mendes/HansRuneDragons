@@ -9,6 +9,7 @@ import org.dreambot.api.methods.skills.Skill;
 import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 
 public class DrinkPrayerPotLeaf extends Leaf {
@@ -22,6 +23,7 @@ public class DrinkPrayerPotLeaf extends Leaf {
     public int onLoop() {
         Item prayerPotion = Inventory.get(p -> p.getName().contains("Prayer potion"));
         if (prayerPotion != null){
+            API.status = "Drinking pray pot";
             int currentPray = Skills.getBoostedLevel(Skill.PRAYER);
             prayerPotion.interact("Drink");
             Sleep.sleepUntil(() -> Skills.getBoostedLevel(Skill.PRAYER) > currentPray,1000, 100);

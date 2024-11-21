@@ -35,6 +35,7 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.script.listener.ItemContainerListener;
 import org.dreambot.api.script.listener.SpawnListener;
+import org.dreambot.api.utilities.Images;
 import org.dreambot.api.utilities.Timer;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.Item;
@@ -53,6 +54,7 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
     public static Timer timer = new Timer();
     private WealthTracker wealthTracker = new WealthTracker();
     DecimalFormat df = new DecimalFormat("#");
+    private Image scriptBanner;
 
     /**
      * @param args script quick launch arguments
@@ -68,6 +70,7 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
      */
     @Override
     public void onStart() {
+        scriptBanner = Images.loadImage("https://i.imgur.com/V9KpN9Y.png");
         timer.start();
         WalkHandler.addNodes();
         ScriptConfiguration.getScriptConfiguration().initInventoryLoadout();
@@ -154,9 +157,19 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
      */
     @Override
     public void onPaint(Graphics g) {
+        if(scriptBanner != null){
+            g.drawImage(scriptBanner,0,337,null);
+            g.setFont(new Font("Tahoma", Font.BOLD, 12));
+            g.setColor(Color.YELLOW);
+            g.drawString(timer.formatTime(timer.elapsed()),120,404);
+            g.drawString(API.currentLeaf,90,443);
+            g.drawString("Click here",380,404);
+            g.drawString(API.status,351,443);
+
+        }
         Graphics2D gg = (Graphics2D) g;
         gg.setRenderingHints(aa);
-        CUSTOM_PAINT.paint(gg);
+        //CUSTOM_PAINT.paint(gg);
     }
 
     @Override

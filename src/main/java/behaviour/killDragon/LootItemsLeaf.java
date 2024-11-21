@@ -11,6 +11,7 @@ import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.GroundItem;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Areas;
 import utilities.Timing;
 
@@ -60,6 +61,7 @@ public class LootItemsLeaf extends Leaf {
                     }
                     if (food != null) {
                         log("Food is not null!");
+                        API.status = "Freeing inventory";
                         if (food.interact("Eat")) {
                             Sleep.sleepUntil(() -> !shouldEatToFreeSlots(), 1000, 100);
                         }
@@ -69,6 +71,7 @@ public class LootItemsLeaf extends Leaf {
                     Item foodToDrop = Inventory.get(f -> f.hasAction("Eat"));
                     if (foodToDrop != null) {
                         log("Food to drop is not null.");
+                        API.status = "Dropping "+foodToDrop.getName();
                         if (foodToDrop.interact("Drop")) {
                             log("We dropped food.. lets return!");
                             return;
@@ -92,6 +95,7 @@ public class LootItemsLeaf extends Leaf {
             for (GroundItem item : getAllLootOnGround()) {
                 if (item != null) {
                     log("Current trying to take: "+item.getName());
+                    API.status = "Looting "+item.getName();
                     if (item.interact("Take")) {
                         Sleep.sleepUntil(() -> GlobalVariables.lootedItem || Skills.getBoostedLevel(Skill.HITPOINTS) >
                                 ScriptConfiguration.getScriptConfiguration().getCombatSettings().getEmergencyTeleportHp(), 5000, 100);

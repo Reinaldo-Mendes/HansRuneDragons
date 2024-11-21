@@ -8,6 +8,7 @@ import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class BankHandler {
 static int openBankFailCounter;
     public static boolean withdrawItem(String itemName, BankMode bankMode){
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawItem(itemName, bankMode);
@@ -25,6 +27,7 @@ static int openBankFailCounter;
         }
         if(Bank.isOpen()){
             if(!bankMode.equals(Bank.getWithdrawMode())){
+                API.status = "Setting bank mode";
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
                     withdrawItem(itemName,bankMode);
@@ -36,6 +39,7 @@ static int openBankFailCounter;
             }
 
             if(Bank.contains(i -> i.getName().contains(itemName))){
+                API.status = "Withdrawing "+itemName;
                 if(Bank.withdraw(i -> i.getName().contains(itemName))){
                     Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains(itemName)), 2000, 100);
                     Logger.log("[BANK HANDLER] Withdrew "+itemName+" successfully.");
@@ -48,6 +52,7 @@ static int openBankFailCounter;
 
     public static boolean withdrawExactItem(String itemName, BankMode bankMode){
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawExactItem(itemName, bankMode);
@@ -55,12 +60,14 @@ static int openBankFailCounter;
         }
         if(Bank.isOpen()){
             if(!bankMode.equals(Bank.getWithdrawMode())){
+                API.status = "Setting bank mode";
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
                     withdrawExactItem(itemName,bankMode);
                 }
             }
             if(Bank.contains(itemName)){
+                API.status = "Withdrawing "+itemName;
                 if(Bank.withdraw(itemName)){
                     Sleep.sleepUntil(() -> Inventory.contains(itemName), 1000, 300);
                     Logger.log("[BANK HANDLER] Withdrew "+itemName+" successfully.");
@@ -75,6 +82,7 @@ static int openBankFailCounter;
 
     public static boolean withdrawAll(String itemName, BankMode bankMode){
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawAll(itemName, bankMode);
@@ -82,12 +90,14 @@ static int openBankFailCounter;
         }
         if(Bank.isOpen()){
             if(!bankMode.equals(Bank.getWithdrawMode())){
+                API.status = "Setting bank mode";
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
                     withdrawAll(itemName,bankMode);
                 }
             }
             if(Bank.contains(itemName)){
+                API.status = "Withdrawing all "+itemName;
                 if(Bank.withdrawAll(itemName)){
                     Sleep.sleepUntil(() -> Inventory.contains(itemName), 1000, 300);
                     Logger.log("[BANK HANDLER] Withdrew "+itemName+" successfully.");
@@ -102,12 +112,14 @@ static int openBankFailCounter;
 
     public static boolean depositAllItems(){
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 depositAllItems();
             }
         }
         if(Bank.isOpen()){
+            API.status = "Depositing all items";
                 if(Bank.depositAllItems()){
                     Sleep.sleepUntil(() -> Inventory.isEmpty(), 2000, 300);
                     Logger.log("[BANK HANDLER] Deposited all items successfully.");
@@ -119,12 +131,14 @@ static int openBankFailCounter;
 
     public static boolean depositAllBut(List<String> itemList){
             if(!Bank.isOpen()){
+                API.status = "Opening bank";
                 if(Bank.open()){
                     Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                     depositAllItems();
                 }
             }
             if(Bank.isOpen()){
+                API.status = "Depositing item list";
                 if(Bank.depositAll(i -> i != null && !itemList.contains(i.getName()))){
                     Sleep.sleepUntil(() -> Inventory.isEmpty(), 2000, 300);
                     Logger.log("[BANK HANDLER] Deposited all items successfully.");
@@ -137,6 +151,7 @@ static int openBankFailCounter;
 
     public static boolean withdrawItem(String itemName, BankMode bankMode, int amount){
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawItem(itemName, bankMode, amount);
@@ -144,11 +159,13 @@ static int openBankFailCounter;
         }
         if(Bank.isOpen()){
             if(!bankMode.equals(Bank.getWithdrawMode())){
+                API.status = "Setting bank mode";
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
                     withdrawItem(itemName,bankMode, amount);
                 }
             }
+            API.status = "Withdrawing "+itemName;
             if(Bank.withdraw(itemName, amount)){
                 Sleep.sleepUntil(() -> Inventory.contains(itemName), 1000, 300);
                 //Logger.log("[BANK HANDLER] Withdrew "+itemName+" successfully.");
@@ -169,6 +186,7 @@ static int openBankFailCounter;
     public static boolean withdrawItemList(List<String> itemList, BankMode bankMode){
         boolean value = false;
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawItemList(itemList, bankMode);
@@ -185,6 +203,7 @@ static int openBankFailCounter;
         if(Bank.isOpen()){
             openBankFailCounter = 0;
             if(!bankMode.equals(Bank.getWithdrawMode())){
+                API.status = "Setting bank mode";
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
                     withdrawItemList(itemList,bankMode);
@@ -198,6 +217,7 @@ static int openBankFailCounter;
             for(String itemInList: itemList){
                 if(Bank.contains(itemInList)){
                     if(!Inventory.contains(itemInList)){
+                        API.status = "Withdrawing "+itemInList;
                         if(Bank.withdraw(itemInList)){
                             Sleep.sleepUntil(() -> Inventory.contains(itemInList), 400, 100);
                             Logger.log("[BANK HANDLER] Withdrew "+itemInList+" successfully.");
@@ -214,6 +234,7 @@ static int openBankFailCounter;
     public static boolean withdrawAllItemList(List<String> itemList, BankMode bankMode){
         boolean value = false;
         if(!Bank.isOpen()){
+            API.status = "Opening bank";
             if(Bank.open()){
                 Sleep.sleepUntil(() -> Bank.isOpen(),1000, 300);
                 withdrawAllItemList(itemList, bankMode);
@@ -221,6 +242,7 @@ static int openBankFailCounter;
         }
         if(Bank.isOpen()){
             if(!bankMode.equals(Bank.getWithdrawMode())){
+                API.status = "Setting bank mode";
                 if(Bank.setWithdrawMode(bankMode)){
                     Logger.log("[BANK HANDLER] Set withdraw mode to "+bankMode);
                     withdrawAllItemList(itemList,bankMode);
@@ -228,6 +250,7 @@ static int openBankFailCounter;
             }
             for(String itemInList: itemList){
                 if(Bank.contains(itemInList)){
+                    API.status = "Withdrawing all "+itemInList;
                     if(Bank.withdrawAll(itemInList)){
                         Sleep.sleepUntil(() -> Inventory.contains(itemInList), 3000, 300);
                         Logger.log("[BANK HANDLER] Withdrew "+itemInList+" successfully.");
@@ -260,6 +283,7 @@ static int openBankFailCounter;
     public static boolean loadInventory(HashMap<String, Integer> loadout) {
         boolean value = false;
         if (!Bank.isOpen()) {
+            API.status = "Opening bank";
             if (Bank.open()) {
                 loadInventory(loadout);
             }
@@ -272,6 +296,7 @@ static int openBankFailCounter;
                    // Logger.log("Item name: "+itemName);
                 }
                 if (!loadout.containsKey(itemName)) {
+                    API.status = "DEpositing all "+i.getName();
                     if (Bank.depositAll(i)) {
                         Logger.log("We deposited " + itemName);
                     }
@@ -280,6 +305,7 @@ static int openBankFailCounter;
                         if (!i.isStackable()) {
                             if (Inventory.count(i.getName()) < loadout.get(itemName)) {
                                 int difference = loadout.get(itemName) - Inventory.count(i.getName());
+                                API.status = "Withdrawing "+ difference+" "+i.getName();
                                 if(Bank.withdraw(i.getName(), difference)){
                                     Logger.log(Color.cyan, "[BANK HANDLER] Withdrew " +difference + " "+i.getName());
                                     Sleep.sleepUntil(() -> Inventory.count(i.getName()) == loadout.get(i.getName()), 2000, 100);
@@ -287,6 +313,7 @@ static int openBankFailCounter;
                             }
                             if(Inventory.count(f -> f.getName().contains(i.getName())) > loadout.get(itemName)){
                                 int difference = Inventory.count(f -> f.getName().contains(i.getName())) - loadout.get(itemName);
+                                API.status = "Depositing "+difference+" "+i.getName();
                                 if(Bank.deposit(f -> f.getName().contains(i.getName()), difference)){
                                     Logger.log(Color.cyan, "[BANK HANDLER] Deposited " +difference + " "+i.getName());
                                     Sleep.sleepUntil(() -> Inventory.count(i.getName()) == loadout.get(i.getName()), 2000, 100);
@@ -314,11 +341,13 @@ static int openBankFailCounter;
                 if(!Inventory.contains(i -> i.getName().contains(name))){
                     //Logger.log("We need to withdraw "+name);
                     if(amount == -1){
+                        API.status = "Withdrawing all "+name;
                         if(Bank.withdrawAll(i -> i.getName().contains(name))){
                             //Logger.log("[BANK HANDLER] Withdrew all "+name);
                             Sleep.sleepUntil(() -> Inventory.contains(i -> i.getName().contains(name)), 1000, 100);
                         }
                     } else{
+                        API.status = "Withdrawing "+name;
                         if(Bank.withdraw(i -> i.getName().contains(name),amount)){
                             //Logger.log("[BANK HANDLER] Withdrew "+amount+ " "+name);
                         }
@@ -328,6 +357,7 @@ static int openBankFailCounter;
                     if(amount != -1){
                         if (Inventory.count(i -> i.getName().contains(name)) != amount){
                             int difference = amount - Inventory.count(i -> i.getName().contains(name));
+                            API.status = "Withdrawing "+name;
                             if(Bank.withdraw(i -> i.getName().contains(name), difference)){
                                 Sleep.sleep(1000,2000);
                             }
@@ -337,6 +367,7 @@ static int openBankFailCounter;
                     } else{
                         //Logger.log("For the item "+name+" we must withdraw all!");
                         if(Bank.contains(i -> i.getName().contains(name))){
+                            API.status = "Withdrawing all "+name;
                             if(Bank.withdrawAll(i -> i.getName().contains(name))){
                                 Sleep.sleep(1000, 2000);
                             }

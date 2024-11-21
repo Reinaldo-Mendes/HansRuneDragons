@@ -8,6 +8,7 @@ import org.dreambot.api.methods.item.GroundItems;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.GroundItem;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class LootFoodLeaf extends Leaf {
         log("Loot food leaf");
         GroundItem food = GroundItems.closest(this::isFood);
         if(food != null){
+            API.status = "Looting "+food.getName();
             if(food.interact("Take")){
                 Sleep.sleepUntil(() -> GlobalVariables.lootedFood, 1500, 100);
                 GlobalVariables.lootedFood = false;

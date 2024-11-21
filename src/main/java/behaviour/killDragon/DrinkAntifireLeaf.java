@@ -6,6 +6,7 @@ import org.dreambot.api.methods.combat.Combat;
 import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 public class DrinkAntifireLeaf extends Leaf {
     @Override
@@ -17,7 +18,8 @@ public class DrinkAntifireLeaf extends Leaf {
     public int onLoop() {
         Item antifire = Inventory.get(i -> i.getName().contains("antifire"));
         if (antifire != null){
-            antifire.interact("Drink");
+            API.status = "Drinking AF";
+                    antifire.interact("Drink");
             Sleep.sleepUntil(() -> isAntifireEnabled(),1000,100);
         }
         return Timing.loopReturn();

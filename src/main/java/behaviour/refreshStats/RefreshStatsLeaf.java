@@ -7,6 +7,7 @@ import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.interactive.GameObject;
+import utilities.API;
 import utilities.Areas;
 import utilities.Timing;
 
@@ -22,6 +23,7 @@ public class RefreshStatsLeaf extends Leaf {
     public int onLoop() {
         GameObject poolOfRefreshment = GameObjects.closest("Pool of Refreshment");
         if (poolOfRefreshment != null && poolOfRefreshment.canReach()) {
+            API.status = "Refreshing stats";
             if (poolOfRefreshment.interact("Drink")) {
                 Sleep.sleepUntil(() -> Skills.getBoostedLevel(Skill.HITPOINTS) >= Skills.getRealLevel(Skill.HITPOINTS), 2000, 100);
             }

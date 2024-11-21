@@ -5,6 +5,7 @@ import org.dreambot.api.methods.container.impl.Inventory;
 import org.dreambot.api.methods.settings.PlayerSettings;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 
 public class DrinkCombatPotionLeaf extends Leaf {
@@ -17,6 +18,7 @@ public class DrinkCombatPotionLeaf extends Leaf {
     public int onLoop() {
         Item combatPotion = Inventory.get(i -> i.getName().contains("uper combat potion"));
         if(combatPotion != null){
+            API.status = "Drinking combat pot";
             if(combatPotion.interact("Drink")){
                 Sleep.sleepUntil(() -> PlayerSettings.getBitValue(13663) > 0, 1000, 100);
             }

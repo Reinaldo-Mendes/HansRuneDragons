@@ -14,6 +14,7 @@ import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Areas;
 import utilities.Timing;
 import utilities.handlers.EquipmentHandler;
@@ -35,6 +36,7 @@ public class TeleportOutLeaf extends Leaf {
     public int onLoop() {
         Item ring = Equipment.getItemInSlot(EquipmentSlot.RING);
         if (ring != null && ring.getName().contains("Ring of dueling")) {
+            API.status = "Teleporting to ferox";
             if (ring.interact("Ferox Enclave")) {
                 Sleep.sleepUntil(() -> Areas.FEROX_ENCLAVE.contains(Players.getLocal()), 1000, 100);
             }
@@ -42,7 +44,8 @@ public class TeleportOutLeaf extends Leaf {
             log("We are not wearing dueling ring...");
             Item inventoryRing = Inventory.get(i -> i.getName().contains("Ring of dueling"));
             if (inventoryRing != null) {
-                EquipmentHandler.wearItem(inventoryRing.getName());
+                API.status = "Wearing "+inventoryRing.getName();
+                        EquipmentHandler.wearItem(inventoryRing.getName());
             } else {
                 log("We don't have dueling ring in inventory... Let's cross the barrier.");
                 GameObject westBarrier = GameObjects.closest(g -> g.getName().equals("Barrier") && g.getX() == 1574);

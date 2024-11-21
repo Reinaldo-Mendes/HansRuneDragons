@@ -6,6 +6,7 @@ import org.dreambot.api.methods.container.impl.equipment.Equipment;
 import org.dreambot.api.utilities.Logger;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class EquipmentHandler {
             Item item = Inventory.get(itemInList);
             if (item != null) {
                 if (item.hasAction("Wear")) {
+                    API.status = "Wearing "+item.getName();
                     if (item.interact("Wear")) {
                         Sleep.sleepUntil(() -> Equipment.all().contains(itemInList), 400, 100);
                     } else {
@@ -45,6 +47,7 @@ public class EquipmentHandler {
                     }
                 }
                 if (item.hasAction("Wield")) {
+                    API.status = "Wielding "+item.getName();
                     if (item.interact("Wield")) {
                         Sleep.sleepUntil(() -> Equipment.all().contains(itemInList), 400, 100);
                     } else {
@@ -54,6 +57,7 @@ public class EquipmentHandler {
                 }
 
                 if (item.hasAction("Equip")) {
+                    API.status = "Equipping "+item.getName();
                     if (item.interact("Equip")) {
                         Sleep.sleepUntil(() -> Equipment.all().contains(itemInList), 400, 100);
                     } else {
@@ -72,6 +76,7 @@ public class EquipmentHandler {
         Item item = Inventory.get(itemName);
         if (item != null) {
             if (item.hasAction("Wear")) {
+                API.status = "Wearing "+item.getName();
                 if (item.interact("Wear")) {
                     Sleep.sleepUntil(() -> Equipment.all().contains(itemName), 1000, 100);
                     Logger.log(Color.cyan, "[EQUIPMENT HANDLER] Worn " + itemName + " successfully.");
@@ -79,6 +84,7 @@ public class EquipmentHandler {
                 }
             }
             if (item.hasAction("Wield")) {
+                API.status = "Wielding "+item.getName();
                 if (item.interact("Wield")) {
                     Sleep.sleepUntil(() -> Equipment.all().contains(itemName), 1000, 100);
                     Logger.log(Color.cyan, "[EQUIPMENT HANDLER] Wielded " + itemName + " successfully.");

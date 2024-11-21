@@ -10,6 +10,7 @@ import org.dreambot.api.methods.magic.Normal;
 import org.dreambot.api.methods.magic.Spellbook;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Timing;
 import utilities.handlers.BankHandler;
 import utilities.handlers.EquipmentHandler;
@@ -38,6 +39,7 @@ public class MakeDigsitePendantLeaf extends Leaf {
         if (weapon != null && weapon.getName().equals("Staff of fire")) {
             if(Inventory.contains("Cosmic rune")){
                 if(Inventory.contains("Ruby necklace")){
+                    API.status = "Casting lvl 3 enchant";
                     if(Magic.castSpell(Normal.LEVEL_3_ENCHANT)){
                         if(Sleep.sleepUntil(() -> Inventory.isOpen(),2000,100)){
                             if(Inventory.get("Ruby necklace").interact()){

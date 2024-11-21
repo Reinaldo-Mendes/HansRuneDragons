@@ -10,6 +10,7 @@ import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.interactive.Character;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.interactive.NPC;
+import utilities.API;
 import utilities.Areas;
 import utilities.Timing;
 
@@ -24,6 +25,7 @@ public class AttackDragonLeaf extends Leaf {
         if (Areas.RUNE_DRAGONS_CAVE.contains(Players.getLocal()) && Players.getLocal().getTile().getX() <= 1573) {
             GameObject barrier = GameObjects.closest(b -> b.getName().equals("Barrier") && b.getX() == 1574);
             if (barrier != null) {
+                API.status = "Clicking barrier";
                 if (barrier.interact("Pass")) {
                     Sleep.sleepUntil(() -> Players.getLocal().getX() >= 1575, 3000, 100);
                 }
@@ -42,6 +44,7 @@ public class AttackDragonLeaf extends Leaf {
             } else{
                 Character dragon = Players.getLocal().getCharacterInteractingWithMe();
                 if(dragon != null){
+                    API.status = "Attacking dragon";
                     if(dragon.interact()){
                         Sleep.sleepUntil(() -> Players.getLocal().getInteractingCharacter() != null, 2000, 100);
                     }

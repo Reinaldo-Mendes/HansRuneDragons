@@ -10,6 +10,7 @@ import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.interactive.GameObject;
 import org.dreambot.api.wrappers.items.Item;
+import utilities.API;
 import utilities.Areas;
 import utilities.Timing;
 import utilities.handlers.BankHandler;
@@ -32,6 +33,7 @@ public class AttachDigsitePendantLeaf extends Leaf {
                 GameObject strangeMachine = GameObjects.closest(g -> g.getName().equals("Strange Machine") && g.getTile().equals(new Tile(1580,5101)));
                 if(strangeMachine != null && strangeMachine.canReach()){
                     pendant.useOn(strangeMachine);
+                    API.status = "Using pendant";
                     Sleep.sleepUntil(() -> PlayerSettings.getBitValue(6142) == 1, 2000, 100);
                 } else{
                     Walking.walk(Areas.STRANGE_MACHINE);
