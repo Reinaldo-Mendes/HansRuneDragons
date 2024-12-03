@@ -1,7 +1,5 @@
 package utilities.DiscordWebHooks;
 
-import DiscordWebHooks.connection.Response;
-import DiscordWebHooks.connection.WebhookException;
 import com.google.gson.Gson;
 import org.apache.hc.client5.http.ClientProtocolException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -11,6 +9,8 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.*;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+import utilities.DiscordWebHooks.connection.Response;
+import utilities.DiscordWebHooks.connection.WebhookException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -90,7 +90,7 @@ public class DiscordWebhook {
         }).start();
     }
 
-    public void sendMessage(Payload dm, File... files) {
+    public void sendMessage(Payload dm,File... files) {
         new Thread(() -> {
             FileInputStream fis = null;
             try {

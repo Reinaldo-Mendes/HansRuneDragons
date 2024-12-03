@@ -11,9 +11,6 @@ public class PrayerSettings {
     public static PrayerSettings getPrayerSettings(){
         return prayerSettings;
     }
-    private static void setPrayerSettings(PrayerSettings prayerSettings){
-        PrayerSettings.prayerSettings = prayerSettings;
-    }
     private PrayerSettings(){
 
     }

@@ -8,10 +8,6 @@ public class CombatSettings {
    public static CombatSettings getCombatSettings(){
       return combatSettings;
    }
-   private static void setCombatSettings(CombatSettings combatSettings){
-      CombatSettings.combatSettings = combatSettings;
-   }
-
    private CombatSettings(){
 
    }

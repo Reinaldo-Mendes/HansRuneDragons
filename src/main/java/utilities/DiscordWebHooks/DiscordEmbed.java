@@ -1,7 +1,8 @@
 package utilities.DiscordWebHooks;
 
-import DiscordWebHooks.embed.*;
+
 import com.google.gson.annotations.SerializedName;
+import utilities.DiscordWebHooks.embed.*;
 
 import java.awt.*;
 import java.time.OffsetDateTime;

@@ -1,7 +1,4 @@
 package config;
-
-import org.dreambot.api.methods.container.impl.equipment.EquipmentSlot;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
