@@ -16,16 +16,16 @@ import behaviour.makeDigsitePendant.MakeDigsitePendantBranch;
 import behaviour.makeDigsitePendant.MakeDigsitePendantLeaf;
 import behaviour.refreshStats.RefreshStatsBranch;
 import behaviour.refreshStats.RefreshStatsLeaf;
-import behaviour.sellItems.SellItemsBranch;
-import behaviour.sellItems.SellLootLeaf;
-import behaviour.sellItems.WalkToGeLeaf;
+import behaviour.mule.MuleBranch;
+import behaviour.mule.SellLootLeaf;
+import behaviour.mule.WalkToGeLeaf;
+import behaviour.sendDiscordMessage.SendDiscordMessageBranch;
+import behaviour.sendDiscordMessage.SendDiscordMessageLeaf;
 import behaviour.walkToDragons.WalkToDragonsBranch;
 import behaviour.walkToDragons.WalkToDragonsLeaf;
 import behaviour.wearEquipment.BuyEquipmentLeaf;
 import behaviour.wearEquipment.WearEquipmentBranch;
 import behaviour.wearEquipment.WearEquipmentLeaf;
-import behaviour.buyItems.BuyItemsBranch;
-import behaviour.buyItems.BuyItemsLeaf;
 import config.GlobalVariables;
 import config.LootItem;
 import config.ScriptConfiguration;
@@ -35,13 +35,13 @@ import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.script.listener.ItemContainerListener;
 import org.dreambot.api.script.listener.SpawnListener;
-import org.dreambot.api.utilities.Images;
 import org.dreambot.api.utilities.Timer;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.Item;
 import paint.CustomPaint;
 import paint.PaintInfo;
 import utilities.API;
+import utilities.FileUtility;
 import utilities.WealthTracker;
 import utilities.handlers.WalkHandler;
 
@@ -51,10 +51,12 @@ import java.text.DecimalFormat;
 @ScriptManifest(category = Category.MONEYMAKING, author = "Hans Zimmer", name = "Hans Rune Dragons", description = "Kills rune dragons", version = 1)
 public class Main extends AbstractScript implements PaintInfo, SpawnListener, ItemContainerListener {
 
+    public static String hansRuneDragonFilePath = System.getProperty("user.dir")+"\\Hans Zimmer"+"\\Hans Rune Dragon";
     public static Timer timer = new Timer();
+    public static Timer discordTimer = new Timer();
     private WealthTracker wealthTracker = new WealthTracker();
     DecimalFormat df = new DecimalFormat("#");
-    private Image scriptBanner;
+    //private Image scriptBanner;
 
     /**
      * @param args script quick launch arguments
@@ -70,13 +72,22 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
      */
     @Override
     public void onStart() {
-        scriptBanner = Images.loadImage("https://i.imgur.com/V9KpN9Y.png");
+        if(!FileUtility.readProfile(hansRuneDragonFilePath+"\\default.txt")){
+            FileUtility.initializeDefaultProfile();
+        } else{
+            log("We read the file default hehehe");
+
+        }
+        //scriptBanner = Images.loadImage("https://i.imgur.com/V9KpN9Y.png");
         timer.start();
-        WalkHandler.addNodes();
-        ScriptConfiguration.getScriptConfiguration().initInventoryLoadout();
-        ScriptConfiguration.getScriptConfiguration().initInventoryLoadoutBuyList();
-        ScriptConfiguration.getScriptConfiguration().initDigsitePendantIngredientsMap();
         GlobalVariables.cacheLootedItemsList();
+        log("Discord timer in minutes: "+ScriptConfiguration.getScriptConfiguration().getWebhookSettings().getMinutesBetweenMessages());
+        discordTimer = new Timer(ScriptConfiguration.getScriptConfiguration().getWebhookSettings().getMinutesBetweenMessages() * 60000);
+        WalkHandler.addNodes();
+        //ScriptConfiguration.getScriptConfiguration().initInventoryLoadout();
+        //ScriptConfiguration.getScriptConfiguration().initInventoryLoadoutBuyList();
+        //ScriptConfiguration.getScriptConfiguration().initDigsitePendantIngredientsMap();
+
         instantiateTree();
     }
 
@@ -85,12 +96,15 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
 
     private void instantiateTree() {
         tree.addBranches(
+                //new InitScriptBranch().addLeafs(new InitScriptLeaf()),
+                //new SendDiscordMessageBranch().addLeafs(new SendDiscordMessageLeaf())
                 new InitScriptBranch().addLeafs(new InitScriptLeaf()),
+                new SendDiscordMessageBranch().addLeafs(new SendDiscordMessageLeaf()),
                 new MakeDigsitePendantBranch().addLeafs(new BuyDigsitePendantIngredients(), new MakeDigsitePendantLeaf()),
                 new DisablePrayerBranch().addLeafs(new DisablePrayerLeaf()),
                 new AttachDigsitePendantBranch().addLeafs(new AttachDigsitePendantLeaf()),
-                new SellItemsBranch().addLeafs(new WalkToGeLeaf(), new SellLootLeaf()),
-                new KillDragonBranch().addLeafs(new TeleportOutLeaf(), new DrinkPrayerPotLeaf(), new ActivatePrayerLeaf(), new DrinkAntifireLeaf(), new EatFoodLeaf(), new DrinkCombatPotionLeaf(),
+                new MuleBranch().addLeafs(new WalkToGeLeaf(), new SellLootLeaf()),
+                new KillDragonBranch().addLeafs(new TeleportOutLeaf(), new DrinkPrayerPotLeaf(), new HopWorldLeaf(), new ActivatePrayerLeaf(), new DrinkAntifireLeaf(), new EatFoodLeaf(), new DrinkCombatPotionLeaf(),
                         new ToggleAutoRetaliateLeaf(), new LootItemsLeaf(), new LootFoodLeaf(), new AttackDragonLeaf()),
                 new RefreshStatsBranch().addLeafs(new RefreshStatsLeaf()),
                 new WearEquipmentBranch().addLeafs(new BuyEquipmentLeaf(),new WearEquipmentLeaf()),
@@ -128,6 +142,8 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
     public String[] getPaintInfo() {
         return new String[]{
                 getManifest().name() + " V" + getManifest().version(),
+                "Discord timer: "+discordTimer.formatTime(discordTimer.remaining()),
+                "Discord timer finished: "+discordTimer.finished(),
                 "Runtime: " + timer.formatTime(timer.elapsed()),
                 "Current Branch: " + API.currentBranch,
                 "Current Leaf: " + API.currentLeaf,
@@ -157,7 +173,7 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
      */
     @Override
     public void onPaint(Graphics g) {
-        if(scriptBanner != null){
+        /*if(scriptBanner != null){
             g.drawImage(scriptBanner,0,337,null);
             g.setFont(new Font("Tahoma", Font.BOLD, 12));
             g.setColor(Color.YELLOW);
@@ -166,10 +182,10 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
             g.drawString("Click here",380,404);
             g.drawString(API.status,351,443);
 
-        }
+        }*/
         Graphics2D gg = (Graphics2D) g;
         gg.setRenderingHints(aa);
-        //CUSTOM_PAINT.paint(gg);
+        CUSTOM_PAINT.paint(gg);
     }
 
     @Override

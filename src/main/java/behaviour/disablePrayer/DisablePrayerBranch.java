@@ -9,7 +9,8 @@ import utilities.Areas;
 public class DisablePrayerBranch extends Branch {
     @Override
     public boolean isValid() {
-        return !Areas.RUNE_DRAGONS_CAVE.contains(Players.getLocal()) && isAnyPrayerActive();
+        return !Areas.RUNE_DRAGONS.contains(Players.getLocal())
+                && isAnyPrayerActive();
     }
 
     private boolean isAnyPrayerActive(){

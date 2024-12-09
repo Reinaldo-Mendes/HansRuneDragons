@@ -1,4 +1,4 @@
-package behaviour.sellItems;
+package behaviour.mule;
 
 import config.GlobalVariables;
 import config.ScriptConfiguration;
@@ -8,7 +8,6 @@ import utilities.Timing;
 import utilities.handlers.BankHandler;
 import utilities.handlers.GrandExchangeHandler;
 import utilities.handlers.InventoryHandler;
-
 import static org.dreambot.api.utilities.Logger.log;
 
 public class SellLootLeaf extends Leaf {

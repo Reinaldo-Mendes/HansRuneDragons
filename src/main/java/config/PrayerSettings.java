@@ -1,24 +1,18 @@
 package config;
 
 import org.dreambot.api.methods.prayer.Prayer;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PrayerSettings {
-    private static PrayerSettings prayerSettings = new PrayerSettings();
-    public static PrayerSettings getPrayerSettings(){
-        return prayerSettings;
-    }
-    private PrayerSettings(){
+    private boolean flickPrayer;
+    private boolean useQuickPrayer;
+    private int minPrayerToDrinkPotion;
+    private int maxPrayerToDrinkPotion;
+    private List<Prayer> selectedPrayers;
 
+
+    public PrayerSettings() {
     }
-    private boolean flickPrayer = false;
-    private boolean useQuickPrayer = true;
-    private int minPrayerToDrinkPotion = 13;
-    private int maxPrayerToDrinkPotion = 45;
-    private List<Prayer> selectedPrayers = new ArrayList<>(Arrays.asList(Prayer.PIETY, Prayer.PROTECT_FROM_MAGIC));
 
     public boolean isFlickPrayer() {
         return flickPrayer;

@@ -3,22 +3,17 @@ package config;
 import org.dreambot.api.methods.combat.CombatStyle;
 
 public class CombatSettings {
-   private static CombatSettings combatSettings = new CombatSettings();
-
-   public static CombatSettings getCombatSettings(){
-      return combatSettings;
-   }
-   private CombatSettings(){
+   public CombatSettings(){
 
    }
    private CombatStyle combatStyle;
-   private boolean enableAutoRetaliate = true;
+   private boolean enableAutoRetaliate;
    private boolean useSpecialAttack;
    private int minPercentageToSpecialAttack;
    private int maxPercentageToSpecialAttack;
-   private int minHpToEAt = 50;
-   private int maxHpToEat = 68;
-   private int emergencyTeleportHp = 25;
+   private int minHpToEat;
+   private int maxHpToEat;
+   private int emergencyTeleportHp;
 
    public CombatStyle getCombatStyle() {
       return combatStyle;
@@ -61,11 +56,11 @@ public class CombatSettings {
    }
 
    public int getMinHpToEAt() {
-      return minHpToEAt;
+      return minHpToEat;
    }
 
    public void setMinHpToEAt(int minHpToEAt) {
-      this.minHpToEAt = minHpToEAt;
+      this.minHpToEat = minHpToEAt;
    }
 
    public int getMaxHpToEat() {

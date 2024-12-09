@@ -1,5 +1,6 @@
 package behaviour.loadInventory;
 
+import config.GlobalVariables;
 import config.ScriptConfiguration;
 import framework.Leaf;
 import org.dreambot.api.methods.container.impl.bank.BankLocation;
@@ -25,9 +26,9 @@ public class BuyInventoryLoadoutItemsLeaf extends Leaf {
             API.status = "Walking to GE";
             WalkHandler.walkToGe();
         } else{
-            log(GrandExchangeHandler.calculateItemsToBuy(ScriptConfiguration.getScriptConfiguration().getInventoryLoadoutBuyList()));
+            log(GrandExchangeHandler.calculateItemsToBuy(GlobalVariables.inventoryLoadoutBuyList));
             GrandExchangeHandler.buyHashMap(GrandExchangeHandler.calculateItemsToBuy(
-                    ScriptConfiguration.getScriptConfiguration().getInventoryLoadoutBuyList()),30);
+                    GlobalVariables.inventoryLoadoutBuyList),30);
         }
         return Timing.loopReturn();
     }

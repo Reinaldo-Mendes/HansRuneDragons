@@ -2,6 +2,7 @@ package behaviour.killDragon;
 
 import config.ScriptConfiguration;
 import framework.Leaf;
+import org.dreambot.api.methods.interactive.Players;
 import org.dreambot.api.methods.prayer.Prayer;
 import org.dreambot.api.methods.prayer.Prayers;
 import org.dreambot.api.methods.skills.Skill;
@@ -9,6 +10,7 @@ import org.dreambot.api.methods.skills.Skills;
 import org.dreambot.api.utilities.Hash;
 import org.dreambot.api.utilities.Sleep;
 import utilities.API;
+import utilities.Areas;
 import utilities.Timing;
 
 import java.util.Arrays;
@@ -21,7 +23,9 @@ import static org.dreambot.api.utilities.Logger.log;
 public class ActivatePrayerLeaf extends Leaf {
     @Override
     public boolean isValid() {
-        return !isDesiredPrayersActive(ScriptConfiguration.getScriptConfiguration().getPrayerSettings().getSelectedPrayers());
+        return Areas.RUNE_DRAGONS.contains(Players.getLocal()) &&
+                !isDesiredPrayersActive(ScriptConfiguration.getScriptConfiguration().getPrayerSettings().getSelectedPrayers());
+
     }
 
     @Override
@@ -50,6 +54,9 @@ public class ActivatePrayerLeaf extends Leaf {
     }
 
     private boolean isDesiredPrayersActive(List<Prayer> prayers) {
+        if(prayers == null){
+            log("Our list of prayers object is null");
+        }
         boolean isActive = true;
         for (Prayer p : prayers) {
             if (!Prayers.isActive(p))

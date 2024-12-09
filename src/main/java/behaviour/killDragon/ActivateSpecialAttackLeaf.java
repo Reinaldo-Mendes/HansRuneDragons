@@ -11,7 +11,6 @@ public class ActivateSpecialAttackLeaf extends Leaf {
 
     @Override
     public int onLoop() {
-
         return Timing.loopReturn();
     }
 }

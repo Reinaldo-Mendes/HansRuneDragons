@@ -1,6 +1,4 @@
 package config;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,29 +16,27 @@ public class ScriptConfiguration {
         return scriptConfiguration;
     }
 
-    private int loopTime;
+    //private int loopTime;
     private int playersToHop;
-    private int minRestockNumber = 100;
-    private int maxRestockNumber = 150;
-    private List<String> itemsToLoot = new ArrayList<>(Arrays.asList("Dragon bones","Runite bar", "Rune platebody","Rune longsword","Rune mace","Rune scimitar","Rune warhammer","Rune platelegs",
-            "Dragon platelegs","Dragon plateskirt","Dragon med helm","Wrath rune","Chaos rune","Death rune","Rune javelin heads","Runite bolts (unf)","Dragonstone","Runite ore",
-            "Dragon javelin heads","Dragon bolts (unf)","Loop half of key","Tooth half of key", "Rune 2h sword","Rune battleaxe","Rune sq shield","Law rune","Rune kiteshield","Rune spear",
-            "Shield left half","Dragon spear","Brimstone key","Dragon limbs","Dragon metal lump","Draconic visage"));
-    private List<String> equipmentToWear = new ArrayList<>(Arrays.asList("Osmumten's fang", "Justiciar faceguard", "Justiciar chestguard", "Justiciar legguards", "Amulet of fury", "Berserker ring (i)",
-            "Avernic defender", "Insulated boots", "Obsidian cape", "Peaceful blessing", "Barrows gloves"));
+    private int minRestockNumber;
+    private int maxRestockNumber;
+    private List<String> itemsToLoot ;
+    private List<String> equipmentToWear;
     private HashMap<String, Integer> inventoryLoadout = new HashMap<>();
-    private HashMap<String, Integer> inventoryLoadoutBuyList = new HashMap<>();
-    private HashMap<String, Integer> digsitePendantIngredients = new HashMap<>();
+    //private HashMap<String, Integer> inventoryLoadoutBuyList = new HashMap<>();
+    //private HashMap<String, Integer> digsitePendantIngredients = new HashMap<>();
     private PrayerSettings prayerSettings;
     private CombatSettings combatSettings;
     private MuleSettings muleSettings;
-    public int getLoopTime() {
+    private WebhookSettings webhookSettings;
+
+    /*public int getLoopTime() {
         return loopTime;
     }
 
     public void setLoopTime(int loopTime) {
         this.loopTime = loopTime;
-    }
+    }*/
 
     public int getPlayersToHop() {
         return playersToHop;
@@ -90,7 +86,7 @@ public class ScriptConfiguration {
         this.inventoryLoadout = inventoryLoadout;
     }
 
-    public HashMap<String, Integer> getInventoryLoadoutBuyList() {
+    /*public HashMap<String, Integer> getInventoryLoadoutBuyList() {
         return inventoryLoadoutBuyList;
     }
 
@@ -104,10 +100,13 @@ public class ScriptConfiguration {
 
     public void setDigsitePendantIngredients(HashMap<String, Integer> digsitePendantIngredients) {
         this.digsitePendantIngredients = digsitePendantIngredients;
-    }
+    }*/
 
     public PrayerSettings getPrayerSettings() {
-        return PrayerSettings.getPrayerSettings();
+        if(prayerSettings == null){
+            prayerSettings = new PrayerSettings();
+        }
+        return prayerSettings;
     }
 
     public void setPrayerSettings(PrayerSettings prayerSettings) {
@@ -115,7 +114,10 @@ public class ScriptConfiguration {
     }
 
     public CombatSettings getCombatSettings() {
-        return CombatSettings.getCombatSettings();
+        if(combatSettings == null){
+            combatSettings = new CombatSettings();
+        }
+        return combatSettings;
     }
 
     public void setCombatSettings(CombatSettings combatSettings) {
@@ -123,16 +125,28 @@ public class ScriptConfiguration {
     }
 
     public MuleSettings getMuleSettings (){
-        return MuleSettings.getMuleSettings();
+        if(muleSettings == null){
+            muleSettings = new MuleSettings();
+        }
+        return muleSettings;
     }
 
     public void setMuleSettings(MuleSettings muleSettings){
         this.muleSettings = muleSettings;
     }
 
+    public WebhookSettings getWebhookSettings() {
+        if(webhookSettings == null){
+            webhookSettings = new WebhookSettings();
+        }
+        return webhookSettings;
+    }
 
+    public void setWebhookSettings(WebhookSettings webhookSettings) {
+        this.webhookSettings = webhookSettings;
+    }
 
-    public void initInventoryLoadout(){
+    /*public void initInventoryLoadout(){
         inventoryLoadout.put("Divine super combat potion(2)", 1);
         inventoryLoadout.put("Extended super antifire(2)", 1);
         inventoryLoadout.put("Ring of dueling", 1);
@@ -154,7 +168,7 @@ public class ScriptConfiguration {
     public void initDigsitePendantIngredientsMap(){
         digsitePendantIngredients.put("Cosmic rune",1);
         digsitePendantIngredients.put("Ruby necklace",1);
-    }
+    }*/
 
 
 }

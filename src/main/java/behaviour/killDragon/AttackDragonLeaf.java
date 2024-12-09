@@ -6,6 +6,7 @@ import org.dreambot.api.input.Mouse;
 import org.dreambot.api.methods.interactive.GameObjects;
 import org.dreambot.api.methods.interactive.NPCs;
 import org.dreambot.api.methods.interactive.Players;
+import org.dreambot.api.methods.walking.impl.Walking;
 import org.dreambot.api.utilities.Sleep;
 import org.dreambot.api.wrappers.interactive.Character;
 import org.dreambot.api.wrappers.interactive.GameObject;
@@ -23,13 +24,14 @@ public class AttackDragonLeaf extends Leaf {
     @Override
     public int onLoop() {
         if (Areas.RUNE_DRAGONS_CAVE.contains(Players.getLocal()) && Players.getLocal().getTile().getX() <= 1573) {
-            GameObject barrier = GameObjects.closest(b -> b.getName().equals("Barrier") && b.getX() == 1574);
+            /*GameObject barrier = GameObjects.closest(b -> b.getName().equals("Barrier") && b.getX() == 1574);
             if (barrier != null) {
                 API.status = "Clicking barrier";
                 if (barrier.interact("Pass")) {
                     Sleep.sleepUntil(() -> Players.getLocal().getX() >= 1575, 3000, 100);
                 }
-            }
+            }*/
+            Walking.walk(Areas.RUNE_DRAGONS.getRandomTile());
         }
         Sleep.sleepUntil(() -> Players.getLocal().isInCombat() &&
                 (Players.getLocal().getInteractingCharacter() != null && Players.getLocal().getInteractingCharacter().getName().equals("Rune dragon")), 3000, 100);

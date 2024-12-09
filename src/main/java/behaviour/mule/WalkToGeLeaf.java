@@ -1,4 +1,4 @@
-package behaviour.sellItems;
+package behaviour.mule;
 
 import framework.Leaf;
 import org.dreambot.api.methods.container.impl.Inventory;

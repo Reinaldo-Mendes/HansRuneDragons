@@ -1,16 +1,12 @@
 package config;
 
 public class MuleSettings {
-    private static MuleSettings muleSettings = new MuleSettings();
-    public static MuleSettings getMuleSettings(){
-        return muleSettings;
-    }
 
-    private MuleSettings(){
+    public MuleSettings(){
 
     }
 
-    private int muleAtXAmountOfLoot = 10000000;
+    private int muleAtXAmountOfLoot = 1000000;
     private int amountOfCoinsToKeep;
     private boolean muleAtCertainTime;
 

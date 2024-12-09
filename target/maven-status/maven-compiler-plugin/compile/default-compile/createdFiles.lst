@@ -6,6 +6,7 @@ utilities\DiscordWebHooks\HttpRequest$2.class
 utilities\DiscordWebHooks\HttpRequest$UploadProgress.class
 main\Main.class
 utilities\DiscordWebHooks\DiscordMessage.class
+behaviour\killDragon\HopWorldLeaf.class
 behaviour\walkToDragons\WalkToDragonsLeaf.class
 http\HttpRequest$RequestOutputStream.class
 paint\PaintInfo.class
@@ -31,6 +32,7 @@ http\HttpRequest$7.class
 utilities\DiscordWebHooks\embed\VideoEmbed.class
 http\HttpRequest$4.class
 http\HttpRequest$Operation.class
+utilities\PrayerDeserializer.class
 utilities\DiscordWebHooks\HttpRequest$CloseOperation.class
 utilities\DiscordWebHooks\HttpRequest$UploadProgress$1.class
 utilities\DiscordWebHooks\HttpRequest$4.class
@@ -47,6 +49,7 @@ utilities\DiscordWebHooks\HttpRequest$RequestOutputStream.class
 behaviour\buyItems\BuyItemsLeaf.class
 utilities\WealthTracker.class
 utilities\DiscordWebHooks\embed\FieldEmbed.class
+behaviour\sendDiscordMessage\SendDiscordMessageLeaf.class
 config\GlobalVariables.class
 http\HttpRequest$ConnectionFactory.class
 paint\PaintableText.class
@@ -64,11 +67,14 @@ http\HttpRequest$6.class
 utilities\DiscordWebHooks\embed\AuthorEmbed.class
 utilities\DiscordWebHooks\HttpRequest$ConnectionFactory.class
 http\HttpRequest$ConnectionFactory$1.class
+utilities\FileUtility$1.class
 behaviour\initScript\InitScriptLeaf.class
 behaviour\loadInventory\LoadInventoryLeaf.class
 behaviour\sellItems\SellLootLeaf.class
+config\WebhookSettings.class
 behaviour\killDragon\LootFoodLeaf.class
 behaviour\killDragon\KillDragonBranch.class
+behaviour\sendDiscordMessage\SendDiscordMessageBranch.class
 utilities\DiscordWebHooks\connection\WebhookException.class
 utilities\DiscordWebHooks\HttpRequest$3.class
 behaviour\refreshStats\RefreshStatsBranch.class

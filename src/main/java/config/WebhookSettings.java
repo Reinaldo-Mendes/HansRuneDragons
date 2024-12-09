@@ -1,24 +1,15 @@
 package config;
 
 public class WebhookSettings {
-    private static WebhookSettings webhookSettings = new WebhookSettings();
-
-    private WebhookSettings getWebhookSettings() {
-        return webhookSettings;
-    }
-
-    public static void setWebhookSettings(WebhookSettings webhookSettings) {
-        WebhookSettings.webhookSettings = webhookSettings;
-    }
-
-    private WebhookSettings() {
+    public WebhookSettings() {
 
     }
 
-    private String URL;
-    private int minutesBetweenMessages;
-    private boolean sendOnRareDrop;
-    private boolean sendOnLevelUp;
+    private String URL = "https://discord.com/api/webhooks/1234633748188758129/acnc3EX5k0hdmh-S8rraVRf3Cw1hITR-nDSti0JCEIQ6Rt59dndu3nyxi-ftk4dW9QXL";
+    private int minutesBetweenMessages = 5;
+    private boolean sendOnRareDrop = false;
+    private boolean sendOnLevelUp = false;
+    private boolean sendOnMuleEvent = true;
 
 
     public String getURL() {
@@ -52,4 +43,13 @@ public class WebhookSettings {
     public void setSendOnLevelUp(boolean sendOnLevelUp) {
         this.sendOnLevelUp = sendOnLevelUp;
     }
+
+    public boolean isSendOnMuleEvent() {
+        return sendOnMuleEvent;
+    }
+
+    public void setSendOnMuleEvent(boolean sendOnMuleEvent) {
+        this.sendOnMuleEvent = sendOnMuleEvent;
+    }
+
 }
