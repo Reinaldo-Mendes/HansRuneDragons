@@ -128,4 +128,8 @@ public class InventoryHandler {
                 .sum();
     }
 
+    private static int getCountInInventoryAndBank(String itemName){
+        return Inventory.count(itemName) + Bank.count(itemName);
+    }
+
 }

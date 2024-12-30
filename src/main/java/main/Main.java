@@ -14,6 +14,7 @@ import behaviour.loadInventory.LoadInventoryLeaf;
 import behaviour.makeDigsitePendant.BuyDigsitePendantIngredients;
 import behaviour.makeDigsitePendant.MakeDigsitePendantBranch;
 import behaviour.makeDigsitePendant.MakeDigsitePendantLeaf;
+import behaviour.mule.GiveCoins;
 import behaviour.refreshStats.RefreshStatsBranch;
 import behaviour.refreshStats.RefreshStatsLeaf;
 import behaviour.mule.MuleBranch;
@@ -33,15 +34,18 @@ import framework.Tree;
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.Category;
 import org.dreambot.api.script.ScriptManifest;
+import org.dreambot.api.script.listener.ChatListener;
 import org.dreambot.api.script.listener.ItemContainerListener;
 import org.dreambot.api.script.listener.SpawnListener;
 import org.dreambot.api.utilities.Timer;
 import org.dreambot.api.wrappers.interactive.NPC;
 import org.dreambot.api.wrappers.items.Item;
+import org.dreambot.api.wrappers.widgets.message.Message;
 import paint.CustomPaint;
 import paint.PaintInfo;
 import utilities.API;
 import utilities.FileUtility;
+import utilities.MuleAPI;
 import utilities.WealthTracker;
 import utilities.handlers.WalkHandler;
 
@@ -49,7 +53,7 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 @ScriptManifest(category = Category.MONEYMAKING, author = "Hans Zimmer", name = "Hans Rune Dragons", description = "Kills rune dragons", version = 1)
-public class Main extends AbstractScript implements PaintInfo, SpawnListener, ItemContainerListener {
+public class Main extends AbstractScript implements PaintInfo, SpawnListener, ItemContainerListener, ChatListener {
 
     public static String hansRuneDragonFilePath = System.getProperty("user.dir")+"\\Hans Zimmer"+"\\Hans Rune Dragon";
     public static Timer timer = new Timer();
@@ -78,6 +82,11 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
             log("We read the file default hehehe");
 
         }
+        if(!MuleAPI.isConnected()){
+            if(MuleAPI.connectToMuleServer(13020)){
+                log("We connected to mule at port 13010");
+            }
+        }
         //scriptBanner = Images.loadImage("https://i.imgur.com/V9KpN9Y.png");
         timer.start();
         GlobalVariables.cacheLootedItemsList();
@@ -96,9 +105,11 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
 
     private void instantiateTree() {
         tree.addBranches(
+                new MuleBranch().addLeafs(new GiveCoins())
+                //new MuleBranch().addLeafs(new WalkToGeLeaf(), new SellLootLeaf())
                 //new InitScriptBranch().addLeafs(new InitScriptLeaf()),
                 //new SendDiscordMessageBranch().addLeafs(new SendDiscordMessageLeaf())
-                new InitScriptBranch().addLeafs(new InitScriptLeaf()),
+                /*new InitScriptBranch().addLeafs(new InitScriptLeaf()),
                 new SendDiscordMessageBranch().addLeafs(new SendDiscordMessageLeaf()),
                 new MakeDigsitePendantBranch().addLeafs(new BuyDigsitePendantIngredients(), new MakeDigsitePendantLeaf()),
                 new DisablePrayerBranch().addLeafs(new DisablePrayerLeaf()),
@@ -109,7 +120,7 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
                 new RefreshStatsBranch().addLeafs(new RefreshStatsLeaf()),
                 new WearEquipmentBranch().addLeafs(new BuyEquipmentLeaf(),new WearEquipmentLeaf()),
                 new WalkToDragonsBranch().addLeafs(new WalkToDragonsLeaf()),
-                new LoadInventoryBranch().addLeafs(new BuyInventoryLoadoutItemsLeaf(), new BankNotedItemsLeaf(),new LoadInventoryLeaf())
+                new LoadInventoryBranch().addLeafs(new BuyInventoryLoadoutItemsLeaf(), new BankNotedItemsLeaf(),new LoadInventoryLeaf())*/
                 //new BuyItemsBranch().addLeafs(new WalkToGeLeaf(), new BuyItemsLeaf())
         );
     }
@@ -133,6 +144,18 @@ public class Main extends AbstractScript implements PaintInfo, SpawnListener, It
         log("Wealth per hour: " + wealthTracker.getWealthGeneratedPerHour() / 1000 + "k");
         log("Loot: " + GlobalVariables.lootedItems);
 
+    }
+
+    @Override
+    public void onMessage(Message message) {
+        if (message.getMessage().equals("Accepted trade.")) {
+            log("We have completed the trade with our mule! Resetting variables");
+            MuleAPI.resetMulingVariables();
+
+        }
+        if (message.getMessage().contains("wishes to trade you")) {
+            GlobalVariables.wishesToTrade = true;
+        }
     }
 
     /**

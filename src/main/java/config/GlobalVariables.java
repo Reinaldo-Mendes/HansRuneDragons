@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GlobalVariables {
+    public static String muleName = "null";
     public static int nextPraySip = 30;
     public static int nextFoodEat = 68;
     public static int tripsToRestock;
@@ -23,6 +24,7 @@ public class GlobalVariables {
     public static boolean needPendant = false;
     public static HashMap<String, Integer> inventoryLoadoutBuyList;
     public static HashMap<String, Integer> digsitePendantIngredients;
+    public static boolean wishesToTrade = false;
 
     static {
         // Inicialize o HashMap no bloco estático de forma segura

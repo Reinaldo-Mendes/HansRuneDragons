@@ -74,7 +74,7 @@ public class WealthTracker {
         this.wealthGeneratedPerHour = wealthGeneratedPerHour;
     }
 
-    public static boolean lootIsOverXAmount(int amount) {
+    public static boolean lootInBankIsOverXAmount(int amount) {
         int lootInBank = 0;
         if (Bank.isCached()) {
             List<Item> bankItems = Bank.all().stream()
